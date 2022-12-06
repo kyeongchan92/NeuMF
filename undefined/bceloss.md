@@ -4,6 +4,8 @@ description: Binary Cross Entropy Loss
 
 # BCELoss
 
+## 사용법
+
 {% code lineNumbers="true" %}
 ```python
 import torch.nn as nn

@@ -26,7 +26,7 @@ $$
 
 $$K$$는 latent space의 차원을 나타낸다. MF는 latent space의 각 차원이 각각의 유저에 대해 독립적이라고 가정하고, 그들을 같은 가중치로 선형적으로 결합한다. 그렇기 때문에 MF는 latent factor의 선형 모델로 여겨진다.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
 
 Figure1은 내적이 어떻게 MF의 표현력을 제안할 수 있는지를 보여준다. 이를 이해하기 위해 우선적으로 두 가지만 얘기하고 넘어가자. 첫 번째, MF는 유저와 아이템을 같은 latent space로 매핑하기 때문에 두 유저간의 유사도 또한 내적으로 계산될 수 있다(같은 방법으로는 latent vector 사이의 코사인 각도). 두 번째로, 일반화 손실 없이, 우리는 자카드 계수를 MF가 회복시켜야 하는 두 유저간의 ground-truth 유사도로서 사용한다.
 
@@ -38,7 +38,7 @@ Figure 1a의 상위 3개의 row를 보자. $$s_{23}(0.66) > s_{12}(0.5) > s_{13}
 
 ### 3.1 General Framework
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
 
 유저 $$u$$와 아이템 $$i$$의 상호작용을 $$y_{ui}$$라고 하자. 그림 2에서 가장 아래 쪽에 있는 인풋 레이어는 두 개의 피쳐 벡터들로 구성되어있다. 이를 각각 유저 $$u$$와 아이템 $$i$$를 가리키는 피쳐벡터, $$\mathbf{v}_u^U$$와 $$\mathbf{v}_i^I$$라고 하자. 이 피쳐벡터들은 경우에 따라 커스터마이징이 가능하다. 즉, 유저나 아이템의 side-information이 있으면 이를 피쳐 벡터로 사용하여, 콜드스타트 문제를 완화시킬 수도 있다. 본 논문에서는 순수한 협업필터링 방법에 대하여만 다룬다. 그러므로 이 피쳐벡터들은 원-핫 인코딩이다.
 
@@ -90,7 +90,7 @@ L&=-\sum_{(u,i) \in
 \end{align*}
 $$
 
-
+**이것이 NCF가 최소화해야하는 목적함수이다!!** 그리고 최적화는 stochastic gradient descent(SGD)를 통해 수행될 수 있다. 눈치 빠른 독자는 이것이 log loss라고도 하는 binary cross-entropy loss와 똑같이 생긴 것을 알아챘을 것이다.&#x20;
 
 
 
