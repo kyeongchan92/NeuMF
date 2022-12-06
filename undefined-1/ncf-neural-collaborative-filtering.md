@@ -90,7 +90,62 @@ L&=-\sum_{(u,i) \in
 \end{align*}
 $$
 
-**이것이 NCF가 최소화해야하는 목적함수이다!!** 그리고 최적화는 stochastic gradient descent(SGD)를 통해 수행될 수 있다. 눈치 빠른 독자는 이것이 log loss라고도 하는 binary cross-entropy loss와 똑같이 생긴 것을 알아챘을 것이다.&#x20;
+**이것이 NCF가 최소화해야하는 목적함수이다!!** 그리고 최적화는 stochastic gradient descent(SGD)를 통해 수행될 수 있다. 눈치 빠른 독자는 이것이 log loss라고도 하는 binary cross-entropy loss와 똑같이 생긴 것을 알아챘을 것이다. 우린 확률적 치료법(?)을 사용하여 implicit 피드백을 사용하는 추천 문제를 binary classification 문제로 다룬다. 추천 논문들 중에 분류문제로 다룬 논문이 거의 없기 때문에 4.3에서 이 문제에 대해 다룰 것이다. 네거티브 샘플 $$\mathcal{Y}^-$$에 대하여, 균일한 분포로 샘플링한다. 균일하지 않은 확률로 샘플링하는 것(예를 들면 아이템 인기도에 따라\[12])이 성능을 더 향상시킬 수 있겠으나, 이는 추후 연구로 남겨놓도록 한다.
+
+
+
+### 3.2 Generalized Matrix Factorization (GMF)
+
+이젠 MF가 어떻게 NCF의 특이한 케이스로 해석될 수 있는지 보여주겠다. MF는 추천시스템에서 가장 유명한 모델이고 많이 연구돼왔기 때문에, MF를 다룸으로써 NCF가 범 factorization 모델에 속한다는 것을 알 수 있다\[26].
+
+유저(아이템)의 원 핫 인코딩에 의해 얻어진 임베딩 벡터는 유저(아이템)의 latent vector로 볼 수 있다. 유저 latent vector $$\mathbf{p}_u$$를 $$\mathbf{P}^T\mathbf{v}_u^U$$라고 하고, 아이템 latent vector $$\mathbf{q}_i$$를 $$\mathbf{Q}^T\mathbf{v}_i^I$$라고 하자. 첫 번째 neural CF layer의 매핑 함수를 다음과 같이 정의한다.
+
+$$
+\phi_1(\mathbf{p}_u,\mathbf{q}_i)=\mathbf{p}_u \odot \mathbf{q}_i
+$$
+
+$$\odot$$은 벡터의 element-wise 곱을 나타낸다. 그 다음 이 벡터를 아웃풋 레이어에 사영시킨다.
+
+$$
+\hat{y}_{ui}=a_{out}(\mathbf{h}^T(\mathbf{p}_u \odot \mathbf{q}_i))
+$$
+
+$$a_{out}$$과 $$\mathbf{h}$$는 각각 활성함수와 아웃풋 레이어의 가중치를 나타낸다. 직관적으로, 만약 $$a_{out}$$로 identity function을 사용하고 $$\mathbf{h}$$를 1로 이루어진 uniform 벡터로 강제한다면, 이건 정확히 MF모델이다.
+
+NCF 프레임워크에서 MF는 쉽게 일반화, 확장될 수 있다. 예를 들어, 만약 $$\mathbf{h}$$를 uniform constraint가 없이 데이터로부터 학습시킨다면 다양한 latent dimension의 중요도를 판별할 수 있는 MF의 변형이 된다. 그리고 만약 $$a_{out}$$을 비선형 함수로 사용한다면, 이는 MF를 비선형적인 설정까지 일반화시켜서 선형 MF모델보다 더욱 표현력이 강해질 것이다. 본 논문에서는 시그모이드 함수 $$\sigma(x)=1/(1+e^{-x})$$를 $$a_{out}$$로 사용하고, $$\mathbf{h}$$를 log loss(Section 3.1.1)로 학습시킴으로써 NCF 하에서 MF의 일반화 버전을 수행한다.
+
+### 3.3 Multi-Layer Perceptron (MLP)
+
+NCF는 유저와 아이템을 모델링하기 위해 두 가지 길을 채택했기 때문에, 그들을 concatenating함으로써 두 가지 길의 피쳐를 결합하는것이 직관적이다. 이 방법은 멀티모달 딥러닝 연구에서 널리 채택되어왔다\[47, 34]. 그러나, 단순한 벡터 concatenation은 유저와 아이템 latent feature 사이의 상호작용을 고려하지 않는다. 이는 collaborative filtering 효과를 모델링하는데 불충분하다. 이 문제를 해결하기 위해서 concatenated 벡터에 대해 표준적인 MLP의 히든 레이어를 추가하여 유저와 아이템 latent feature 사이의 상호작용을 학습하게 할 것을 제안한다. 이렇게 하면 GMF에서 고정된 element-wise 곱을 한 방식보다 $$\mathbf{p}_u$$와 $$\mathbf{q}_i$$사이의 상호작용을 학습하기 위하여 모델에게 더 많은 유연성과 비선형성을 줄 수 있다. 더욱 정확히는, NCF 프레임워크 하에서의 MLP 모델은 다음과 같이 정의된다:
+
+$$
+\begin{align*}
+\mathbf{z}_1 &= \phi_1 (\mathbf{p}_u, \mathbf{q}_i) = 
+\begin{bmatrix}
+\mathbf{p}_u  \\
+\mathbf{q}_i
+\end{bmatrix},
+\\
+\phi_2(\mathbf{z}_1) &= a_2(W_2^T \mathbf{z}_1 + \mathbf{b}_2),
+
+\\
+& \cdots
+\\
+\phi_L(\mathbf{z}_{L-1}) &= a_L(W_L^T \mathbf{z}_{L-1} + \mathbf{b}_L)
+\\
+\hat{y}_{ui} &= \sigma(\mathbf{h}^T \phi _L (\mathbf{z}_{L-1}))
+
+
+\end{align*}
+$$
+
+$$W_x$$, $$b_x$$, $$a_x$$는 각각 $$x$$번째 레이어의 퍼셉트론에 대한 가중치 행렬, 편향 벡터, 활성화함수를 나타낸다. MLP 레이어의 활성화 함수는 시그모이드, 하이퍼볼릭 탄젠트, ReLU, 또 다른 것들 중 자유롭게 선택할 수 있다. 각각의 함수에 대해 설명하자면: 1) 시그모이드 함수는 각각의 뉴런을 (0, 1) 안에 위치시켜서 모델의 성능을 제한할 수도 있다; 이는 또한 saturation이라는 단점이 있는데, 즉 아웃풋이 0 또는 1에 가까워지게 되면 뉴런이 학습을 멈춰버린다는 것이다. 2) tanh는 좋은 선택지이고 널리 선택되어 왔지만 \[6, 44], 이는 오직 시그모이드의 단점만을 어느 정도만 완화시킨다. 왜냐하면 이는 시그모이드가 스케일링된 버전이라고 볼 수 있기 때문이다($$\tanh (x/2)=2\sigma - 1$$). 3)그리고 우리는 ReLU를 선택했는데, 이는 생물학적으로 더 그럴듯하고 non-saturated인 것으로 밝혀졌었다\[9]; 게다가, 이는 sparse 활성화를 촉진시켜서 sparse 데이터에 더 잘 맞고 오버피팅될 확률이 적다. 우리의 실험에서는 ReLU가 tanh보다 살짝 더 나은 결과를 보여주었고 sigmoid보다는 크게 좋았다.
+
+신경망 구조의 디자인에 관해서는, 일반적인 솔루션은 타워 패턴을 따르는 것, 즉 아래 레이어가 가장 넓고 각각의 이어지는 레이어는 더 적은 수의 뉴런을 갖는 구조다(Figure 2). 더 높은 레이어의 히든 유닛이 더 적은 수가 됨으로써 데이터의 피쳐의 더욱 추상적인 특징을 학습할 수 있다는 것이 전제이다\[10]. 우리는 실험에서 높은 층으로 갈수록 레이어 사이즈를 절반으로 줄이는 타워 구조를 사용했다.
+
+
+
+### 3.4 Fusion of GMF and MLP
 
 
 
@@ -98,7 +153,33 @@ $$
 
 
 
-90
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
