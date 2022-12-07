@@ -207,13 +207,15 @@ GMF와 MLP의 학습에 관해 말하자면, 최적화 기법으로 Adam(Adaptiv
 
 ## 4. EXPERIMENTS
 
-**RQ1.** Do our proposed NCF methods outperform the stateof-the-art implicit collaborative filtering methods?
+이 섹션에서는 다음 research question에 대답하기 위하여 실험을 수행한다.
 
-**RQ2.** How does our proposed optimization framework (log loss with negative sampling) work for the recommendation task?
+**RQ1.** 우리가 제안하는 NCF 방법이 SOTA의 implicit collaborative filtering을 능가하는가?
 
-**RQ3.** Are deeper layers of hidden units helpful for learning from user–item interaction data?
+**RQ2.** 제안한 최적화 프레임워크(log loss with negative sampling)가 추천 태스크에서는 어떻게 동작하는가?
 
-In what follows, we first present the experimental settings, followed by answering the above three research questions.
+**RQ3.** 더 깊은 히든레이어층이 유저-아이템 상호작용 데이터로부터 학습에 대해 유용한가?
+
+아래에서는 실험 세팅 및 위 research question에 대한 대답을 한다.
 
 ### 4.1 Experimental Settings
 
@@ -224,7 +226,16 @@ In what follows, we first present the experimental settings, followed by answeri
 1. MovieLens. 이 영화 평점 데이터셋은 collaborative filtering 알고리즘을 계산하기 위하여 널리 이용되어 왔다. 백만 개의 평점이 있는 버전을 사용하였고, 여기서 각 유저는 최소 20개 평가를 하였다. 이건 explicit 피드백 데이터이기 때문에, 우린 의도적으로 explicit 피드백의 implicit signal\[21] 로부터의 학습 성능을 조사하기 위해 이 데이터셋을 선택했다. 결국, implicit data로 바꾸어 평가를 했는지 안했는지에 대해 1과 0으로 나타냈다는 것이다.
 2. Pinterest. 이 implicit 피드백 데이터는 \[8]에 의해 컨텐츠 기반 추천을 위하여 구축되었다. 오리지널 데이터는 매우 크고 매우 sparse하다. 예를 들어, 20% 이상의 유저가 오직 하나의 pin을 갖고 있어서 collaborative filtering 알고리즘을 계산하기 어렵다. 그래서 movielens 데이터와 같은 방식으로 필터링하여 최소 20번의 상호작용(pin)이 있는 유저만을 사용했다. 이렇게 하면 55,187명의 유저와 1,500,809번의 상호작용이 존재한다. 이 데이터에서의 상호작용이란 유저가 자신의 보드에 이미지를 pin 한 것을 의미한다.
 
-**Evaluation Protocols.** 아이템 추천 성능을 계산하기 위하여, \[1, 14, 27]과 같은 논문에서 널리 사용되는 leave-one-out 평가 방법을 채택하였다. 각 유저에 대하여 가장 최신 상호작용을 테스트셋으로 정하고 나머지 데이터를 학습에 사용한다. 모든 아이템을 각 유저에 대해서 랭킹하는 것은 매우 시간낭비이기 때문에, 상호작용 없는 아이템 중 랜덤 샘플 100개를 뽑아 테스트 아이템을 100개 중에서 랭킹하는 방식\[6, 21]을 사용했다. 랭킹된 리스트의 성능은 _Hit Ratio_(HR)와 nDCG\[11]로 측정된다. 특별한 언급이 없다면 랭킹 리스트를 10개에서 끊어서, HR은 테스트 아이템이 그 top10에 존재하는지를 측정하고, NDCG는&#x20;
+**Evaluation Protocols.** 아이템 추천 성능을 계산하기 위하여, \[1, 14, 27]과 같은 논문에서 널리 사용되는 leave-one-out 평가 방법을 채택하였다. 각 유저에 대하여 가장 최신 상호작용을 테스트셋으로 정하고 나머지 데이터를 학습에 사용한다. 모든 아이템을 각 유저에 대해서 랭킹하는 것은 매우 시간낭비이기 때문에, 상호작용 없는 아이템 중 랜덤 샘플 100개를 뽑아 테스트 아이템을 100개 중에서 랭킹하는 방식\[6, 21]을 사용했다. 랭킹된 리스트의 성능은 _Hit Ratio_(HR)와 nDCG\[11]로 측정된다. 특별한 언급이 없다면 랭킹 리스트를 10개에서 끊어서, HR은 테스트 아이템이 그 top10에 존재하는지를 측정하고, NDCG는 그 hit의 위치까지 고려하여, 높이 랭크될수록 높은 스코어를 할당한다. 각 테스트 유저에 대해 두 가지 메트릭을 모두 사용하여 평균값을 적어놓았다.
+
+
+
+**Baselines.** NCF(GMF, MLP, NeuMF)를 다음의 방법들과 비교하였다.
+
+* ItemPop.&#x20;
+* ItemKNN \[31].&#x20;
+* BPR \[27].&#x20;
+* eALS \[14].&#x20;
 
 
 
