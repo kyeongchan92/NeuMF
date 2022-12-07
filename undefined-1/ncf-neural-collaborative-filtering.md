@@ -187,33 +187,34 @@ $$\mathbf{p}_u^G$$와 $$\mathbf{p}_u^M$$은 GMF와 MLP의 유저 임베딩을 �
 
 #### 3.4.1 Pre-training
 
+NeuMF의 목적함수가 non-convexity를 갖고 있기 때문에, 그래디언트 기반의 최적화 방법은 오직 로컬 옵티멈만을 찾는다. \[7]에서 초기화가 수렴과 딥러닝 모델의 성능에 있어서 중요하다는 것이 보여졌다. NeuMF는 GMF와 MLP의 앙상블이기 때문에, GMF와 MLP의 사전학습 모델을 이용하여 NeuMF를 초기화 할 것을 제안한다.
+
+우선 GMF와 MLP를 수렴까지 랜덤 초기화한다. 그리고 난 후 그 모델 파라미터를 NeuMF의 파라미터의 상응하는 부분에 대해 초기화 하는데 사용한다. 변동성은 오직 아웃풋 레이어에 있는데, 이 부분은 두 모델의 가중치를 다음과 같이 concatenate하여,
+
+$$
+\mathbf{h} \leftarrow
+\begin{bmatrix}
+\alpha \mathbf{h}^{GMF}  \\
+(1-\alpha)\mathbf{h}^{MLP}
+\end{bmatrix}
+$$
+
+$$\mathbf{h}^{GMF}$$와 $$\mathbf{h}^{MLP}$$는 사전학습된 GMF와 MLP 모델의 $$\mathbf{h}$$ 벡터이다. $$\alpha$$는 두 사전학습 모델 사이의 트레이드 오프를 결정하는 하이퍼 파라미터이다.
+
+GMF와 MLP의 학습에 관해 말하자면, 최적화 기법으로 Adam(Adaptive Moment Estimation)\[20]을 사용하였다. Adam은 두 모델에 대하여 vanilla SGD보다 빨리 수렴하고 learning rate 조정이 필요없다. NeuMF에 사전학습 파라미터를 삽입한 뒤에는 Adam이 아닌 vanilla SGD를 사용하여 최적화하였다. 왜냐하면 Adam은 파라미터 업데이트 시 모멘텀 정보를 저장해야하기 때문이다. NeuMF를 사전학습된 모델 파라미터로 초기화하고 모멘텀 정보는 버리기 때문에, NeuMF를 모멘텀 기반의 방법으로 더욱 최적화 시키는것은 적절하지 않다.
 
 
 
+### 4.1 Experimental Settings
 
+**Datasets.** 두 가지의 공용 데이터셋 MovieLens와 Pinterest로 실험하였다. 두 데이터셋 요약은 Table 1과 같다.
 
+<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
+1. MovieLens. 이 영화 평점 데이터셋은 collaborative filtering 알고리즘을 계산하기 위하여 널리 이용되어 왔다. 백만 개의 평점이 있는 버전을 사용하였고, 여기서 각 유저는 최소 20개 평가를 하였다. 이건 explicit 피드백 데이터이기 때문에, 우린 의도적으로 explicit 피드백의 implicit signal\[21] 로부터의 학습 성능을 조사하기 위해 이 데이터셋을 선택했다. 결국, implicit data로 바꾸어 평가를 했는지 안했는지에 대해 1과 0으로 나타냈다는 것이다.
+2. Pinterest. 이 implicit 피드백 데이터는 \[8]에 의해 컨텐츠 기반 추천을 위하여 구축되었다. 오리지널 데이터는 매우 크고 매우 sparse하다. 예를 들어, 20% 이상의 유저가 오직 하나의 pin을 갖고 있어서 collaborative filtering 알고리즘을 계산하기 어렵다. 그래서 movielens 데이터와 같은 방식으로 필터링하여 최소 20번의 상호작용(pin)이 있는 유저만을 사용했다. 이렇게 하면 55,187명의 유저와 1,500,809번의 상호작용이 존재한다. 이 데이터에서의 상호작용이란 유저가 자신의 보드에 이미지를 pin 한 것을 의미한다.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+**Evaluation Protocols.** 아이템 추천 성능을 계산하기 위하여, \[1, 14, 27]과 같은 논문에서 널리 사용되는 leave-one-out 평가 방법을 채택하였다. 각 유저에 대하여 가장 최신 상호작용을 테스트셋으로 정하고 나머지 데이터를 학습에 사용한다. 모든 아이템을 각 유저에 대해서 랭킹하는 것은 매우 시간낭비이기 때문에, 상호작용 없는 아이템 중 랜덤 샘플 100개를 뽑아 테스트 아이템을 100개 중에서 랭킹하는 방식\[6, 21]을 사용했다. 랭킹된 리스트의 성능은 _Hit Ratio_(HR)와 nDCG\[11]로 측정된다. 특별한 언급이 없다면 랭킹 리스트를 10개에서 끊어서, HR은 테스트 아이템이 그 top10에 존재하는지를 측정하고, NDCG는&#x20;
 
 
 
