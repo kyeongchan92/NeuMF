@@ -2,7 +2,7 @@
 
 * [데이터사이언스 기본](README.md)
   * [BCELoss](undefined/bceloss.md)
-* [추천에서의 Recall (Hit Ratio, HR)](recall-hit-ratio-hr.md)
+  * [추천에서의 Recall (Hit Ratio, HR)](undefined/recall-hit-ratio-hr.md)
 * [Collaborative Filtering](collaborative-filtering.md)
 * [딥러닝을 이용한 추천시스템](undefined-1/README.md)
   * [NeuMF(Neural Collaborative Filtering)](undefined-1/ncf-neural-collaborative-filtering.md)
