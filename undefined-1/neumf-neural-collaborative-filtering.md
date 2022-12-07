@@ -1,4 +1,4 @@
-# NCF(Neural Collaborative Filtering)
+# NeuMF(Neural Collaborative Filtering)
 
 [He, X., Liao, L., Zhang, H., Nie, L., Hu, X., & Chua, T. S. (2017, April). Neural collaborative filtering. In Proceedings of the 26th international conference on world wide web (pp. 173-182).](https://dl.acm.org/doi/pdf/10.1145/3038912.3052569)
 
@@ -146,6 +146,52 @@ $$W_x$$, $$b_x$$, $$a_x$$는 각각 $$x$$번째 레이어의 퍼셉트론에 대
 
 
 ### 3.4 Fusion of GMF and MLP
+
+지금까지 우리는 NCF의 두 가지 예시를 개발했다. latent feature 상호작용을 모델링하기 위하여 선형 커널을 적용한 GMF, 데이터로부터 상호작용 함수를 학습하기 위하여 비선형 커널을 사용하는 MLP. 여기서 질문이 하나 생긴다. 복잡한 유저-아이템 상호작용을 더 잘 모델링하기 위하여, GMF와 MLP가 상호 보완적으로 **NCF 프레임워크 안에서 어떻게 GMF와 MLP를 결합시켜야 할까**?
+
+바로 적용할 수 있는 방법은 GMF와 MLP가 같은 임베딩 레이어를 공유하게 만들어서, 그 이후 그들의 상호작용 함수의 아웃풋을 결합하는 것이다. 이 방법은 잘 알려진 Neural Tensor Network(NTN) \[33]과 같은 정신을 공유한다. 구체적으로, GMF를 한 개의 레이어를 가진 MLP와 결합하는 것은 다음과 같이 수식화된다:
+
+$$
+\hat{y}_{ui} = \sigma(\mathbf{h}^T a(\mathbf{p}_u \odot \mathbf{q}_i) + \mathbf{W} 
+\begin{bmatrix}
+\mathbf{p}_u  \\
+\mathbf{q}_i
+\end{bmatrix}+\mathbf{b}
+
+)
+$$
+
+그러나, GMF와 MLP의 임베딩을 공유하는 것은 성능을 제한할 수도 있다. 예를 들어, GMF와 MLP는 같은 임베딩 사이즈를 사용해야만 한다; 최적의 임베딩 사이즈가 매우 다른 데이터라면 이 방법은 최적의 앙상블이라고 할 수 없다.
+
+결합 모델의 유연성을 확보하기 위하여, GMF와 MLP가 각각의 임베딩을 학습하도록 한 후 마지막 히든레이어에서 concatenating하도록 했다. Figure3이 이 제안을 묘사하고 있으며, 수식은 다음과 같다:
+
+$$
+\begin{align*}
+\phi^{GMF} &= \mathbf{p}_u^G \odot \mathbf{q}_i^G,
+\\
+\phi^{MLP} &= a_L(\mathbf{W}_L^T (a_{L-1}(\dots a_2(\mathbf{W}_2^T \begin{bmatrix}
+\mathbf{p}_u^M  \\
+\mathbf{q}_i^M
+\end{bmatrix} + \mathbf{b}_2 ) \dots )) + \mathbf{b}_L
+\\
+\hat{y}_{ui} &= \sigma(\mathbf{h}^T \begin{bmatrix}
+\phi^{GMF}  \\
+\phi^{MLP}
+\end{bmatrix})
+\end{align*}
+$$
+
+$$\mathbf{p}_u^G$$와 $$\mathbf{p}_u^M$$은 GMF와 MLP의 유저 임베딩을 나타낸다. $$\mathbf{q}_i^G$$와 $$\mathbf{q}_i^M$$는 아이템에 대하여 마찬가지다. 전에 다뤘듯이, MLP의 활성함수로 ReLU를 사용했다. 이 모델은 MF의 선형성과 DNN의 비선형성을 결합하여 유저-아이템 latent 구조를 모델링한다. 우리는 이 모델을 "_NeuMF(Neural Matrix Factorization_)"이라고 부른다. 각각의 모델 파라미터들에 관한 미분값은 표준적인 역전파로 계산될 수 있다.
+
+
+
+#### 3.4.1 Pre-training
+
+
+
+
+
+
 
 
 
