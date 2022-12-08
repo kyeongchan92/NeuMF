@@ -16,7 +16,7 @@
 
 ### 계산
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (2).png" alt=""><figcaption></figcaption></figure>
 
 테스트의 시간이 왔다. 테스트 대상이 되는 아이템은 1) interaction이 1인데 테스트셋으로 분류된 아이템과 2) 미사용한 아이템이다.
 
