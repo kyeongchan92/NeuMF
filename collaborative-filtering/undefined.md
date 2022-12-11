@@ -8,7 +8,7 @@
 
 
 
-    <figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../.gitbook/assets/image (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 
 2.  아이템 기반 협업 필터링
@@ -21,5 +21,8 @@
 
 <figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
+## 이웃 기반 방법론의 평점 예측
 
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>초극단적 예시) ?에 들어갈 숫자는 무엇일까.</p></figcaption></figure>
 
+<figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
