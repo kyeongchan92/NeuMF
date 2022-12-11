@@ -8,7 +8,7 @@
 
 
 
-    <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 
 2.  아이템 기반 협업 필터링
@@ -19,7 +19,7 @@
 
 평점 행렬은 R이라 표현하고, m명의 사용자와 n개의 아이템을 가지고 있는 mXn 행렬이다. 평점 중 일부를 학습데이터로 사용하고, 일부는 테스트 데이터로 사용한다\[22].
 
-![](<../.gitbook/assets/image (13).png>)
+<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
 
 
