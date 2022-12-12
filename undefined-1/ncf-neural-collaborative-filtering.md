@@ -155,7 +155,7 @@ $$
 )
 $$
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (2).png" alt=""><figcaption></figcaption></figure>
 
 그러나, GMF와 MLP의 임베딩을 공유하는 것은 성능을 제한할 수도 있다. 예를 들어, GMF와 MLP는 같은 임베딩 사이즈를 사용해야만 한다; 최적의 임베딩 사이즈가 매우 다른 데이터라면 이 방법은 최적의 앙상블이라고 할 수 없다.
 
@@ -177,7 +177,7 @@ $$
 \end{align*}
 $$
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Figure 3. Neural matrix factorization model</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (3).png" alt=""><figcaption><p>Figure 3. Neural matrix factorization model</p></figcaption></figure>
 
 $$\mathbf{p}_u^G$$와 $$\mathbf{p}_u^M$$은 GMF와 MLP의 유저 임베딩을 나타낸다. $$\mathbf{q}_i^G$$와 $$\mathbf{q}_i^M$$는 아이템에 대하여 마찬가지다. 위에서 언급했듯, MLP의 활성함수로 ReLU를 사용했다. 이 모델은 MF의 선형성과 DNN의 비선형성을 결합하여 유저-아이템 latent 구조를 모델링한다. 우리는 이 모델을 "_NeuMF(Neural Matrix Factorization_)"이라고 부른다. 각각의 모델 파라미터들에 관한 미분값은 표준적인 역전파로 계산될 수 있다.
 
@@ -240,21 +240,41 @@ $$
 
 * **eALS \[14].** 아이템 추천에 있어서 SOTA MF 방법이다. 이는 수식 5의 squared loss를 최적화하며, 아이템 인기도에 따라 비균일하게 가중치를 적용하여, 사용하지 않은 모든 아이템들을 네거티브 샘플로 취급한다. eALS는 균일하게 가중치를 주는 WMF \[19]보다 좋은 성능을 보이며, 여기서는 WMF의 성능은 다루지 않는다.
 
+$$
+L_{sqr} = \sum_{(u,i) \in \mathcal{Y} \cup \mathcal{Y}^-} w_{ui}(y_{ui} - \hat{y}_{ui})^2
+$$
+
 **Parameter Settings.** Keras로 실험을 수행했다. NCF의 하이퍼 파라미터를 결정하기 위하여, 각 유저별로 상호작용 중 임의로 하나를 뽑아 검증데이터로 사용하였고 이에 기반에 하이퍼 파라미터를 결정하였다. 모든 NCF 모델들은 수식 7의 log loss를 최적화함으로써 학습되며, 하나의 positive 샘플 당 4개의 negative 샘플을 사용했다. 처음부터 학습되는 NCF모델에는 가우시안 분포(평균 0, 표준편차 0.01)로 모델 파라미터를 초기화 하였으며 mini-batch Adam\[20] 으로 최적화하였다. \[128, 256, 512, 1024]의 배치사이즈를, \[0.0001, 0.0005, 0.001, 0.005]의 learning rate를 테스트하였다. NCF의 마지막 히든레이어가 모델 capacity를 결정하기 때문에, 이를 _predictive factor_라고 부르기로 하고 \[8, 16, 32, 64] factor를 평가하였다. 큰 factor는 오버피팅을 유발하고 성능을 낮아지게 한다는 점을 유념해야 한다. 특별한 언급이 없다면, MLP의 히든레이어는 3개를 사용했다. 예를 들어, 만약 predictive factor의 사이즈가 8이라면, neural CF layer의 구조는 32 -> 16 -> 8 이 되며, 임베딩 사이즈는 16이다. 사전학습된 NeuMF의 $$\alpha$$는 0.5로 설정하여, 사전 훈련된 GMF와 MLP가 NeuMF의 초기화에 동등하게 기여하게 했다.
 
 ### 4.2 Performance Comparison (RQ1)
 
 <figure><img src="../.gitbook/assets/image (8).png" alt=""><figcaption><p>Figure 4</p></figcaption></figure>
 
+Figure 4는 predictive factor의 수에 대한 HR@10과 NDCG@10 결과이다. MF방법인 BPR과 eALS의 predictive factor는 잠재 인자의 수와 동일하다. ItemKNN에서 이웃의 수를 다양하게 실험해본 후 최고의 성능 값을 기록하였다. ItemPop은 성능이 너무 낮아 Figure 4에서는 제외되었다.
 
+첫 번째로, NeuMF가 두 데이터셋 모두에서 eALS와 BPR과는 큰 차이로 제일 높은 성능을 달성한 것을 볼 수 있다(차이 각각 4.5%, 4.9%). Pinterest에서는 예측인자가 8로 작음에도 불구하고 eALS와 BPR이 일 때보다 높다. 이는 선형적인 MF와 비선형적인 MLP의 결합으로 인해 NeuMF의 표현력이 높아짐을 의미한다. 두 번째로, 서로 다른 두 NCF인 GMF와 MLPr가 모두 좋은 성능을 보여주었다. MLP가 GMF보다 살짝 높다. MLP는 더 많은 히든레이어를 추가함으로써 더 향상될 수 있으며 여기서는 3개일 때만 보여준다. 작은 예측 요인에 대해서는, GMF가 eALS를 두 데이터셋 모두에서 능가했다; 비록 GMF가 큰 인자에서는 오버피팅이 발생하지만, GMF의 최고 성능은 eALS의 최고성능보다 높다. 마지막으로, GMF와 BPR은 같은 MF를 학습하지만 목적함수는 다르기 때문에, 추천태스크에 대한 분류관점의 효율성은 인정하면서, GMF는 BPR보다는 항상 높다.
 
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>Figure 5</p></figcaption></figure>
 
+Figure 5는 $$K$$를 1부터 10까지 바꿔가며 측정한 Top-$$K$$ 성능을 보여준다. 그림을 깔끔하게 보기 위하여 다른 NCF 모델은 빼로 NeuMF만 기록하였다. NeuMF는 모든 $$K$$에 대해서 항상 다른 모델보다 높다. 그리고 추가적으로 one-sample paired t-test를 수행하여 향상 정도가 $$p<0.01$$로 통계적으로 유의미한지 확인했다. 베이스라인 방법에 대하여, Movielens의 NDCG에서, eALS는 BPR을 5.1% 능가했고 Pinterest에서는 더 낮았다. Pairwise ranking-aware 학습자 때문에 BPR이 랭킹 성능에서는 더 강력하다는 \[14]의 발견과 동일한 결과이다. ItemKNN은 모델 기반 방법론보다는 낮았다. 그리고 ItemPop의 결과는 매우 안좋아서 단순 인기상품보다는 개인화가 요구된다는 것을 보여준다.
 
+#### 4.2.1 Utility of Pre-trainig
 
+<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Table 2. Performance of NeuMF with and without pre-training</p></figcaption></figure>
 
+사전학습의 유용성에 대해 설명하기 위하여, NeuMF의 사전학습 버전과 사전학습 안 된 버전 두 개를 비교했다. 사전학습이 없는 NeuMF에서 Adam과 랜덤 초기화를 사용하여 학습시켰다. Table 2에서 볼 수 있는 것처럼, 사전학습된 NeuMF는 거의 모든 경우 더 좋은 성능을 보였고 오직 MovieLens의 잠재요인 8일 때만 살짝 낮았다. 사전학습된 NeuMF는 Movielens와 Pinterest에서 각각 2,2%, 1,1%만큼 상대적인 향상을 보였다.
 
+### 4.3 Log Loss with Negative Sampling (RQ2)
 
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Figure 6. Training loss and recommendation performance of NCF methods w.r.t the number of iterations on MovieLens (factors=8)</p></figcaption></figure>
 
+Implicit 피드백이 한 가지 클래스만 존재한다는 속성을 다루기 위해서, 우리는 추천 문제를 이진 분류 문제로 변환했다. NCF를 확률적 모델로 바라봄으로써, 이를 log loss로 최적화하였다. Figure 6은 MovieLens에 대해 각각의 iteration에서 NCF의 학습 loss와 추천 성능을 보여준다. Pinterest에 대한 결과에서는 동일한 추세를 보여 생략했다. 첫 번째로, iteration이 높아질수록 NCF의 학습 손실은 점점 감소하고 추천 성능은 향상하는 것을 볼 수 있다. iteration 10 이하에서 가장 효율적인 성능 향상이 일어나며, 더 높은 곳에서는 오버피팅이 발생한다(예를 들어, 10 이상에서는 비록 NeuMF의 학습 손실은 감소하지만 추천 성능은 하락한다). 두 번째로, 세 NCF 모델 중 NeuMF가 가장 낮은 학습 손실을 보였고 그 다음 MLP, GMF 순서이다. 추천 성능 또한 NeuMF > MLP > GMF 순서이다. 위 결과는 implicit 피드백을 학습할 때 log loss를 최적화하는 것에 대한 합리성과 효과성을 제공하는 경험적 증거가 된다.
+
+Pointwise 목적 함수\[27 33]에 대한 pointwise log loss의 장점은 네거티브 샘플링 시의 샘플링 비율의 유연성이다. pairwise objective 함수는 오직 하나의 네거티브 샘플이 positive 샘플과 페어링 되는 반면, pointwise loss의 샘플링 비율은 유연하게 조절될 수 있다.
+
+<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Figure 7. positive 샘플당 네거티브 샘플의 수에 따를 성능(factor=16). BPR는 오직 하나의 네거티브 샘플을 사용한다.</p></figcaption></figure>
+
+NCF의 네거티브 샘플링의 효과를 설명하기 위하여, Figure 7에 네거티브 샘플링 비율을 다르게 하여 성능을 비교하였다. positive 샘플 하나 당 하나의 네거티브 샘플링은 최적의 성능을 위해선 충분하지 못하고 더 많은 네거티브 샘플이 좋음이 명백히 보인다. GMF와 BPR을 비교했을 때, GMF의 성능은 네거티브 샘플링 비율이 1일 때는 BPR의 성능과 동일하지만, GMF의 성능은 샘플링 비율이 높아짐에 따라 점점 높아지는 것을 볼 수 있다. 이를 통해 pairwise BPR loss에 대한 log loss의 장점을 확인할 수 있다. 두 모든 데이터셋에 대하여, 최적의 샘플링 비율은 3에서 6 근방이다. Pinterest에서는, 샘플링 비율이 7보다 커지면 성능이 떨어지기 시작했다. 이는 샘플링 비율을 공격적으로 설정하는 것이 성능에 큰 타격이 됨을 보여준다.
 
 
 
