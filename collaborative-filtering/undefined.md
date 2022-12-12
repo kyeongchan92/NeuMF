@@ -31,6 +31,6 @@ description: >-
 
 이웃 기반 방법론은 이름 그대로 유저(아이템) 자기 자신과의 이웃, 즉 유사한 유저(아이템)을 이용해 문제를 푼다. 그래서 유저(아이템) 서로 간의 유사도를 구하는 것이 기본적이면서 중요한 과정이 된다.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>?에 들어갈 숫자는 무엇일까. 초극단적 예시이긴 하지만..</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption><p>?에 들어갈 숫자는 무엇일까. 초극단적 예시이긴 하지만..</p></figcaption></figure>
 
 <figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
