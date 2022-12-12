@@ -219,7 +219,7 @@ GMF와 MLP의 학습에 관해 말하자면, 최적화 기법으로 Adam(Adaptiv
 
 **Datasets.** 두 가지의 공용 데이터셋 MovieLens와 Pinterest로 실험하였다. 두 데이터셋 요약은 Table 1과 같다.
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 1. MovieLens. 이 영화 평점 데이터셋은 collaborative filtering 알고리즘을 계산하기 위하여 널리 이용되어 왔다. 백만 개의 평점이 있는 버전을 사용하였고, 여기서 각 유저는 최소 20개 평가를 하였다. 이건 explicit 피드백 데이터이기 때문에, 우린 의도적으로 explicit 피드백의 implicit signal\[21] 로부터의 학습 성능을 조사하기 위해 이 데이터셋을 선택했다. 결국, implicit data로 바꾸어 평가를 했는지 안했는지에 대해 1과 0으로 나타냈다는 것이다.
 2. Pinterest. 이 implicit 피드백 데이터는 \[8]에 의해 컨텐츠 기반 추천을 위하여 구축되었다. 오리지널 데이터는 매우 크고 매우 sparse하다. 예를 들어, 20% 이상의 유저가 오직 하나의 pin을 갖고 있어서 collaborative filtering 알고리즘을 계산하기 어렵다. 그래서 movielens 데이터와 같은 방식으로 필터링하여 최소 20번의 상호작용(pin)이 있는 유저만을 사용했다. 이렇게 하면 55,187명의 유저와 1,500,809번의 상호작용이 존재한다. 이 데이터에서의 상호작용이란 유저가 자신의 보드에 이미지를 pin 한 것을 의미한다.
@@ -254,7 +254,7 @@ Figure 4는 predictive factor의 수에 대한 HR@10과 NDCG@10 결과이다. MF
 
 첫 번째로, NeuMF가 두 데이터셋 모두에서 eALS와 BPR과는 큰 차이로 제일 높은 성능을 달성한 것을 볼 수 있다(차이 각각 4.5%, 4.9%). Pinterest에서는 예측인자가 8로 작음에도 불구하고 eALS와 BPR이 일 때보다 높다. 이는 선형적인 MF와 비선형적인 MLP의 결합으로 인해 NeuMF의 표현력이 높아짐을 의미한다. 두 번째로, 서로 다른 두 NCF인 GMF와 MLPr가 모두 좋은 성능을 보여주었다. MLP가 GMF보다 살짝 높다. MLP는 더 많은 히든레이어를 추가함으로써 더 향상될 수 있으며 여기서는 3개일 때만 보여준다. 작은 예측 요인에 대해서는, GMF가 eALS를 두 데이터셋 모두에서 능가했다; 비록 GMF가 큰 인자에서는 오버피팅이 발생하지만, GMF의 최고 성능은 eALS의 최고성능보다 높다. 마지막으로, GMF와 BPR은 같은 MF를 학습하지만 목적함수는 다르기 때문에, 추천태스크에 대한 분류관점의 효율성은 인정하면서, GMF는 BPR보다는 항상 높다.
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>Figure 5</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (3).png" alt=""><figcaption><p>Figure 5</p></figcaption></figure>
 
 Figure 5는 $$K$$를 1부터 10까지 바꿔가며 측정한 Top-$$K$$ 성능을 보여준다. 그림을 깔끔하게 보기 위하여 다른 NCF 모델은 빼로 NeuMF만 기록하였다. NeuMF는 모든 $$K$$에 대해서 항상 다른 모델보다 높다. 그리고 추가적으로 one-sample paired t-test를 수행하여 향상 정도가 $$p<0.01$$로 통계적으로 유의미한지 확인했다. 베이스라인 방법에 대하여, Movielens의 NDCG에서, eALS는 BPR을 5.1% 능가했고 Pinterest에서는 더 낮았다. Pairwise ranking-aware 학습자 때문에 BPR이 랭킹 성능에서는 더 강력하다는 \[14]의 발견과 동일한 결과이다. ItemKNN은 모델 기반 방법론보다는 낮았다. 그리고 ItemPop의 결과는 매우 안좋아서 단순 인기상품보다는 개인화가 요구된다는 것을 보여준다.
 
@@ -278,7 +278,7 @@ NCF의 네거티브 샘플링의 효과를 설명하기 위하여, Figure 7에 �
 
 ### 4.4 Is Deep Learning Helpful? (RQ3)
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 유저-아이템 상호작용 함수를 신경망으로 학습시키는 연구가 소수 존재함에 따라, 추천 태스크에 딥 네트워크 구조를 사용할지 말지가 궁금해진다. 그러기 위하여, MLP의 히든 레이어의 숫자를 바꿔가며 실험해보았다. 결과는 Table 3과 4에 요약되어있다. MLP-3은 (임베딩 레이어 옆)세 개의 히든 레이어를 가진 MLP를 의미한다. 표에서 볼 수 있는 것처럼, 같은 capability를 가진 모델이라고 해도 더 많은 레이어를 쌓는 것이 더 좋은 성능을 보인다. 이 결과는 collaborative 추천에 대해 딥 모델을 사용하는 것의 효과성을 보여준다. 우리는 이 향상이 더 많은 비선형 레이어를 쌓았기 때문이라고 생각한다. 이를 확인하기 위해서, 활성함수를 idendity 함수로 하여 선형 레이어를 더 쌓아보았다. 그 결과는 ReLU를 사용했을때보다 훨씬 낮았다.
 
