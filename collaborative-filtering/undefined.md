@@ -37,7 +37,7 @@ description: >-
 
 이 접근법에서는 타겟 유저와 유사한 유저를 찾아야한다. 두 사용자 $$u$$와 $$v$$의 평점 벡터 간의 유사도 $$\text{Sim}(u, v)$$를 구하는 방법 중 하나는 **피어슨 상관계수**이다. 피어슨 상관계수를 계산할 때는 $$u$$와 $$v$$ 둘 모두가 평가한 아이템에 대해서만 계산된다. 일단 각 사용자 $$u$$에 대한 평점 평균을 구해야한다.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>equation 2.1</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (16).png" alt=""><figcaption><p>equation 2.1</p></figcaption></figure>
 
 그리고 $$u$$와 $$v$$의 행(유저)간의 피어슨 상관계수는 다음과 같다.
 
@@ -47,9 +47,13 @@ description: >-
 
 <figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption><p>Table 2.1</p></figcaption></figure>
 
-Table 2.1의 예제를 생각해보자. 다섯 명의 유저 0 \~ 4와 여섯 개의 아이템 0 \~ 6이 있다. 평점은 1 \~ 7의 범주 안에 속한다고 하자. 타겟 유저가 2번 유저라고 하자. 우리는 유저2의 아이템 0과 5에 대한 예측 $$\hat{r}_{30}$$, $$\hat{r}_{35}$$를 계산해야한다.
+Table 2.1의 예제를 생각해보자. 다섯 명의 유저 0 \~ 4와 여섯 개의 아이템 0 \~ 5가 있다. 평점은 1 \~ 7의 범주를 갖는다고 하자. 타겟 유저가 **유저 2**라고 하자. 우리는 유저 2의 아이템 0과 5에 대한 예측, $$\hat{r}_{20}$$, $$\hat{r}_{25}$$를 계산해야한다.
 
 가장 먼저 해야할 것은 유저 2와 다른 모든 유저들 간의 유사도 계산이다. 예를 들면 유저 0과 유저 2의 피어슨 상관계수는 다음과 같다.
 
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
+유저 2와 다른 모든 유저와의 비어슨 유사도는 Table 2.1의 오른쪽 표와 같다. 유저 3과 가장 가까운 상위 2명은 **유저 0**과 **유저 1**이다. $$\hat{r}_{20}$$, $$\hat{r}_{25}$$를 계산하기 위하여, 유저 0과 유저 1의 평점을 사용한다.
+
+<figure><img src="../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 

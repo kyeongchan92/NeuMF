@@ -248,7 +248,7 @@ $$
 
 ### 4.2 Performance Comparison (RQ1)
 
-<figure><img src="../.gitbook/assets/image (8).png" alt=""><figcaption><p>Figure 4</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (8) (2).png" alt=""><figcaption><p>Figure 4</p></figcaption></figure>
 
 Figure 4는 predictive factor의 수에 대한 HR@10과 NDCG@10 결과이다. MF방법인 BPR과 eALS의 predictive factor는 잠재 인자의 수와 동일하다. ItemKNN에서 이웃의 수를 다양하게 실험해본 후 최고의 성능 값을 기록하였다. ItemPop은 성능이 너무 낮아 Figure 4에서는 제외되었다.
 
