@@ -53,7 +53,7 @@ Table 2.1의 예제를 생각해보자. 다섯 명의 유저 0 \~ 4와 여섯 �
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
-유저 2와 다른 모든 유저와의 비어슨 유사도는 Table 2.1의 오른쪽 표와 같다. 유저 3과 가장 가까운 상위 2명은 **유저 0**과 **유저 1**이다. $$\hat{r}_{20}$$, $$\hat{r}_{25}$$를 계산하기 위하여, 유저 0과 유저 1의 평점을 사용한다.
+유저 2와 다른 모든 유저와의 피어슨 유사도는 Table 2.1의 오른쪽 표와 같다. 유저 3과 가장 가까운 상위 2명은 **유저 0**과 **유저 1**이다. $$\hat{r}_{20}$$, $$\hat{r}_{25}$$를 계산하기 위하여, 유저 0과 유저 1의 평점을 사용한다.
 
 <figure><img src="../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 
