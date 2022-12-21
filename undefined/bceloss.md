@@ -22,7 +22,9 @@ loss.backward()
 
 output은 모델의 아웃풋이다.
 
-$$l(\hat{y}, y) = -w_n [y \log \hat{y} + (1-y)\log (1- \hat{y})]$$
+$$
+l(\hat{y}, y) = -w_n [y \log \hat{y} + (1-y)\log (1- \hat{y})]
+$$
 
 $$w_n$$은 샘플마다 가중치를 줄 수 있다는 것인데, 일단 무시하자.
 
@@ -55,7 +57,7 @@ Sigmoid를 적용시켜보자.
 
 ```python
 sigmoid_output = m(output)
-sigmlid_output
+sigmoid_output
 
 :tensor([[0.8655],
          [0.8407],
