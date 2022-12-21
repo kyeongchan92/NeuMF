@@ -181,6 +181,53 @@ $$
 
 $$\mathbf{p}_u^G$$와 $$\mathbf{p}_u^M$$은 GMF와 MLP의 유저 임베딩을 나타낸다. $$\mathbf{q}_i^G$$와 $$\mathbf{q}_i^M$$는 아이템에 대하여 마찬가지다. 위에서 언급했듯, MLP의 활성함수로 ReLU를 사용했다. 이 모델은 MF의 선형성과 DNN의 비선형성을 결합하여 유저-아이템 latent 구조를 모델링한다. 우리는 이 모델을 "_NeuMF(Neural Matrix Factorization_)"이라고 부른다. 각각의 모델 파라미터들에 관한 미분값은 표준적인 역전파로 계산될 수 있다.
 
+<details>
+
+<summary></summary>
+
+
+
+</details>
+
+{% code overflow="wrap" lineNumbers="true" %}
+```python
+class NeuMF(nn.Module):
+    def __init__(self, n_user, n_item, emb_dim):
+        super().__init__()
+        # GMF
+        self.GMF_user = nn.Embedding(n_user, emb_dim)
+        self.GMF_item = nn.Embedding(n_item, emb_dim)
+
+        # MLP
+        self.MLP_user = nn.Embedding(n_user, emb_dim)
+        self.MLP_item = nn.Embedding(n_item, emb_dim)
+        self.MLP_linear = nn.Sequential(
+            nn.Linear(emb_dim*2, emb_dim//2),
+            nn.ReLU(),
+            nn.Linear(emb_dim//2, emb_dim//(2*2)),
+            nn.ReLU(),
+            nn.Linear(emb_dim//(2*2), emb_dim//(2*2*2)),
+        )
+
+        # output layer
+        self.output_layer = nn.Linear(emb_dim + (emb_dim//(2*2*2)), 1)
+
+    def forward(self, user, item):
+        # GMF
+        phi_gmf = torch.mul(self.GMF_user(user), self.GMF_item(item))
+
+        # MLP
+        concat = torch.cat([self.MLP_user(user), self.MLP_item(item)], dim=1)
+        phi_mlp = self.MLP_linear(concat)
+        
+        # output layer
+        output = self.output_layer(torch.cat([phi_gmf, phi_mlp], dim=1))
+        logit = torch.sigmoid(output)
+
+        return logit
+```
+{% endcode %}
+
 
 
 #### 3.4.1 Pre-training
