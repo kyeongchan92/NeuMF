@@ -5,10 +5,10 @@
 ## 4. EXPERIMENTS > Evaluation Metrics.
 
 $$
-NDCG@K=Z_K \sum_{i=1}^{K} \frac{2^{r_i}-1}{\log_2(i+1)}
+NDCG@K=Z_K \sum_{i=1}^{K} \frac{2^{rel_i}-1}{\log_2(i+1)}
 $$
 
-$$Z_K$$는 제일 좋은 성능일 때를 1로 만들기 위한 normalizer이다. $$r_i$$는 $$i$$번째 아이템의 graded relavance이다. (implicit data이기 때문에) $$r_i$$는 1 또는 0이며, 1일 때는 아이템이 test set에 존재할 때이고, 0일 때는 그렇지 않을 때이다.
+$$Z_K$$는 제일 좋은 성능일 때를 1로 만들기 위한 normalizer이다. $$rel_i$$는 $$i$$번째 아이템의 graded relavance이다. (implicit data이기 때문에) $$r_i$$는 1 또는 0이며, 1일 때는 아이템이 test set에 존재할 때이고, 0일 때는 그렇지 않을 때이다.
 
 예를 들어 $$K=5$$라고 해보자.
 
@@ -48,7 +48,7 @@ output :
 idcg : 1.6309
 ```
 
-dcg를 구해보자. dcg는 $$K=5$$까지 $$\sum_{i=1}^{K} \frac{2^{r_i}-1}{\log_2(i+1)}$$를 계산한 값이다.
+dcg를 구해보자. dcg는 $$K=5$$까지 $$\sum_{i=1}^{K} \frac{2^{rel_i}-1}{\log_2(i+1)}$$를 계산한 값이다.
 
 ```python
 # dcg
