@@ -3,6 +3,7 @@
 * [데이터사이언스 기본](README.md)
   * [BCELoss](undefined/bceloss.md)
   * [추천에서의 Recall (Hit Ratio, HR)](undefined/recall-hit-ratio-hr.md)
+  * [Implicit data에서의 nDCG](undefined/implicit-data-ndcg.md)
   * [Matrix Factorization](undefined/matrix-factorization.md)
   * [torch.nn: Parameter vs. Linear vs. Embedding](undefined/torch.nn-parameter-vs.-linear-vs.-embedding.md)
 * [Collaborative Filtering](collaborative-filtering/README.md)
@@ -12,3 +13,4 @@
   * [NGCF(Neural Graph Collaborative Filtering)](undefined-1/ngcf-neural-graph-collaborative-filtering.md)
   * [NARM(Neural Attentive session-based recommendation)](undefined-1/narm-neural-attentive-session-based-recommendation.md)
   * [BERT4Rec](undefined-1/bert4rec.md)
+  * [SASRec(작성중)](undefined-1/sasrec.md)
