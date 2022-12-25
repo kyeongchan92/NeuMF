@@ -186,7 +186,6 @@ $$
 $$\mathbf{p}_u^G$$와 $$\mathbf{p}_u^M$$은 GMF와 MLP의 유저 임베딩을 나타낸다. $$\mathbf{q}_i^G$$와 $$\mathbf{q}_i^M$$는 아이템에 대하여 마찬가지다. 위에서 언급했듯, MLP의 활성함수로 ReLU를 사용했다. 이 모델은 MF의 선형성과 DNN의 비선형성을 결합하여 유저-아이템 latent 구조를 모델링한다. 우리는 이 모델을 "_NeuMF(Neural Matrix Factorization_)"이라고 부른다. 각각의 모델 파라미터들에 관한 미분값은 표준적인 역전파로 계산될 수 있다.
 
 {% code overflow="wrap" lineNumbers="true" %}
-````python
 ```python
 class NeuMF(nn.Module):
     def __init__(self, n_user, n_item, emb_dim):
@@ -224,7 +223,6 @@ class NeuMF(nn.Module):
 
         return logit
 ```
-````
 {% endcode %}
 
 
