@@ -310,19 +310,19 @@ Figure 5는 $$K$$를 1부터 10까지 바꿔가며 측정한 Top-$$K$$ 성능을
 
 ### 4.3 Log Loss with Negative Sampling (RQ2)
 
-<figure><img src="../.gitbook/assets/image (2) (4).png" alt=""><figcaption><p>Figure 6. Training loss and recommendation performance of NCF methods w.r.t the number of iterations on MovieLens (factors=8)</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Figure 6. Training loss and recommendation performance of NCF methods w.r.t the number of iterations on MovieLens (factors=8)</p></figcaption></figure>
 
 Implicit 피드백이 한 가지 클래스만 존재한다는 속성을 다루기 위해서, 우리는 추천 문제를 이진 분류 문제로 변환했다. NCF를 확률적 모델로 바라봄으로써, 이를 log loss로 최적화하였다. Figure 6은 MovieLens에 대해 각각의 iteration에서 NCF의 학습 loss와 추천 성능을 보여준다. Pinterest에 대한 결과에서는 동일한 추세를 보여 생략했다. 첫 번째로, iteration이 높아질수록 NCF의 학습 손실은 점점 감소하고 추천 성능은 향상하는 것을 볼 수 있다. iteration 10 이하에서 가장 효율적인 성능 향상이 일어나며, 더 높은 곳에서는 오버피팅이 발생한다(예를 들어, 10 이상에서는 비록 NeuMF의 학습 손실은 감소하지만 추천 성능은 하락한다). 두 번째로, 세 NCF 모델 중 NeuMF가 가장 낮은 학습 손실을 보였고 그 다음 MLP, GMF 순서이다. 추천 성능 또한 NeuMF > MLP > GMF 순서이다. 위 결과는 implicit 피드백을 학습할 때 log loss를 최적화하는 것에 대한 합리성과 효과성을 제공하는 경험적 증거가 된다.
 
 Pointwise 목적 함수\[27 33]에 대한 pointwise log loss의 장점은 네거티브 샘플링 시의 샘플링 비율의 유연성이다. pairwise objective 함수는 오직 하나의 네거티브 샘플이 positive 샘플과 페어링 되는 반면, pointwise loss의 샘플링 비율은 유연하게 조절될 수 있다.
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Figure 7. positive 샘플당 네거티브 샘플의 수에 따를 성능(factor=16). BPR는 오직 하나의 네거티브 샘플을 사용한다.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (2).png" alt=""><figcaption><p>Figure 7. positive 샘플당 네거티브 샘플의 수에 따를 성능(factor=16). BPR는 오직 하나의 네거티브 샘플을 사용한다.</p></figcaption></figure>
 
 NCF의 네거티브 샘플링의 효과를 설명하기 위하여, Figure 7에 네거티브 샘플링 비율을 다르게 하여 성능을 비교하였다. positive 샘플 하나 당 하나의 네거티브 샘플링은 최적의 성능을 위해선 충분하지 못하고 더 많은 네거티브 샘플이 좋음이 명백히 보인다. GMF와 BPR을 비교했을 때, GMF의 성능은 네거티브 샘플링 비율이 1일 때는 BPR의 성능과 동일하지만, GMF의 성능은 샘플링 비율이 높아짐에 따라 점점 높아지는 것을 볼 수 있다. 이를 통해 pairwise BPR loss에 대한 log loss의 장점을 확인할 수 있다. 두 모든 데이터셋에 대하여, 최적의 샘플링 비율은 3에서 6 근방이다. Pinterest에서는, 샘플링 비율이 7보다 커지면 성능이 떨어지기 시작했다. 이는 샘플링 비율을 공격적으로 설정하는 것이 성능에 큰 타격이 됨을 보여준다.
 
 ### 4.4 Is Deep Learning Helpful? (RQ3)
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (4).png" alt=""><figcaption></figcaption></figure>
 
 유저-아이템 상호작용 함수를 신경망으로 학습시키는 연구가 소수 존재함에 따라, 추천 태스크에 딥 네트워크 구조를 사용할지 말지가 궁금해진다. 그러기 위하여, MLP의 히든 레이어의 숫자를 바꿔가며 실험해보았다. 결과는 Table 3과 4에 요약되어있다. MLP-3은 (임베딩 레이어 옆)세 개의 히든 레이어를 가진 MLP를 의미한다. 표에서 볼 수 있는 것처럼, 같은 capability를 가진 모델이라고 해도 더 많은 레이어를 쌓는 것이 더 좋은 성능을 보인다. 이 결과는 collaborative 추천에 대해 딥 모델을 사용하는 것의 효과성을 보여준다. 우리는 이 향상이 더 많은 비선형 레이어를 쌓았기 때문이라고 생각한다. 이를 확인하기 위해서, 활성함수를 idendity 함수로 하여 선형 레이어를 더 쌓아보았다. 그 결과는 ReLU를 사용했을때보다 훨씬 낮았다.
 

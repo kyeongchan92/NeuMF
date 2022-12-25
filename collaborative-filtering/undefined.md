@@ -31,7 +31,7 @@ description: >-
 
 이웃 기반 방법론은 이름 그대로 유저(아이템) 자기 자신과의 이웃, 즉 유사한 유저(아이템)을 이용해 문제를 푼다. 그래서 유저(아이템) 서로 간의 유사도를 구하는 것이 기본적이면서 중요한 과정이 된다.
 
-<figure><img src="../.gitbook/assets/image (4) (3).png" alt=""><figcaption><p>?에 들어갈 숫자는 무엇일까. 초극단적 예시이긴 하지만..</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (3) (1).png" alt=""><figcaption><p>?에 들어갈 숫자는 무엇일까. 초극단적 예시이긴 하지만..</p></figcaption></figure>
 
 ### 사용자 기반 이웃 모델
 
@@ -41,7 +41,7 @@ description: >-
 
 그리고 $$u$$와 $$v$$의 행(유저)간의 피어슨 상관계수는 다음과 같다.
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption><p>equation 2.2</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (3).png" alt=""><figcaption><p>equation 2.2</p></figcaption></figure>
 
 ## 사용자 기반 알고리즘의 예시
 
@@ -51,7 +51,7 @@ Table 2.1의 예제를 생각해보자. 다섯 명의 유저 0 \~ 4와 여섯 �
 
 가장 먼저 해야할 것은 유저 2와 다른 모든 유저들 간의 유사도 계산이다. 예를 들면 유저 0과 유저 2의 피어슨 상관계수는 다음과 같다.
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 유저 2와 다른 모든 유저와의 피어슨 유사도는 Table 2.1의 오른쪽 표와 같다. 유저 3과 가장 가까운 상위 2명은 **유저 0**과 **유저 1**이다. $$\hat{r}_{20}$$, $$\hat{r}_{25}$$를 계산하기 위하여, 유저 0과 유저 1의 평점을 사용한다.
 

@@ -8,7 +8,7 @@
 
 그림과 같이 어떤 유저가 사용한 아이템과 아직 사용하지 않은 아이템이 있다고 하자. 실제 데이터에서는 사용 아이템보다는 미사용 아이템이이 **아주 훨씬 엄청 되게 심하게** 많겠지?
 
-<figure><img src="../.gitbook/assets/image (1) (1) (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 우선적으로, 사용한 아이템을 train과 test로 나누게 될 것이다. 아래 그림처럼 학습데이터셋으로 A, C, E라는 아이템이, 테스트 셋으로 I, K, G라는 아이템이 되었다고 하자.
 
@@ -16,7 +16,7 @@
 
 ### 계산
 
-<figure><img src="../.gitbook/assets/image (3) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 테스트의 시간이 왔다. 테스트 대상이 되는 아이템은 1) interaction이 1인데 테스트셋으로 분류된 아이템과 2) 미사용한 아이템이다.
 
