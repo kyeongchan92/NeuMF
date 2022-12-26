@@ -45,7 +45,7 @@ description: >-
 
 ## 사용자 기반 알고리즘의 예시
 
-<figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption><p>Table 2.1</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (15) (1).png" alt=""><figcaption><p>Table 2.1</p></figcaption></figure>
 
 Table 2.1의 예제를 생각해보자. 다섯 명의 유저 0 \~ 4와 여섯 개의 아이템 0 \~ 5가 있다. 평점은 1 \~ 7의 범주를 갖는다고 하자. 타겟 유저가 **유저 2**라고 하자. 우리는 유저 2의 아이템 0과 5에 대한 예측, $$\hat{r}_{20}$$, $$\hat{r}_{25}$$를 계산해야한다.
 
