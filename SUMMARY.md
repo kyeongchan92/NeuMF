@@ -16,5 +16,6 @@
   * [BERT4Rec](undefined-1/bert4rec.md)
   * [SASRec(작성중)](undefined-1/sasrec.md)
 * [통계 기본](undefined-2/README.md)
+  * [LightGCN](undefined-2/lightgcn.md)
   * [배깅과 랜덤 포레스트(작성중)](undefined-2/undefined.md)
   * [Catboost(작성중)](undefined-2/catboost.md)
