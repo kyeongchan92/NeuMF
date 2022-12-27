@@ -10,6 +10,7 @@
   * [Matrix Factorization](undefined/matrix-factorization.md)
   * [torch.nn: Parameter vs. Linear vs. Embedding](undefined/torch.nn-parameter-vs.-linear-vs.-embedding.md)
 * [Collaborative Filtering](collaborative-filtering/README.md)
+  * [FPMC(작성중)](collaborative-filtering/fpmc.md)
   * [이웃 기반 협업 필터링](collaborative-filtering/undefined.md)
 * [딥러닝을 이용한 추천시스템](undefined-1/README.md)
   * [NeuMF(Neural Collaborative Filtering)](undefined-1/ncf-neural-collaborative-filtering.md)
