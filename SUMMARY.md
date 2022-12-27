@@ -1,9 +1,6 @@
 # Table of contents
 
-* [통계 기본](README.md)
-  * [배깅과 랜덤 포레스트(작성중)](undefined/undefined.md)
-  * [Catboost(작성중)](undefined/catboost.md)
-* [데이터사이언스 기본](<README (1).md>)
+* [데이터사이언스 기본](README.md)
   * [BCELoss](undefined/bceloss.md)
   * [추천에서의 Recall (Hit Ratio, HR)](undefined/recall-hit-ratio-hr.md)
   * [Implicit data에서의 nDCG](undefined/implicit-data-ndcg.md)
@@ -13,8 +10,11 @@
   * [FPMC(작성중)](collaborative-filtering/fpmc.md)
   * [이웃 기반 협업 필터링](collaborative-filtering/undefined.md)
 * [딥러닝을 이용한 추천시스템](undefined-1/README.md)
-  * [NeuMF(Neural Collaborative Filtering)](undefined-1/ncf-neural-collaborative-filtering.md)
+  * [NeuMF(Neural Collaborative Filtering)](undefined-1/neumf-neural-collaborative-filtering.md)
   * [NGCF(Neural Graph Collaborative Filtering)](undefined-1/ngcf-neural-graph-collaborative-filtering.md)
   * [NARM(Neural Attentive session-based recommendation)](undefined-1/narm-neural-attentive-session-based-recommendation.md)
   * [BERT4Rec](undefined-1/bert4rec.md)
   * [SASRec(작성중)](undefined-1/sasrec.md)
+* [통계 기본](undefined-2/README.md)
+  * [배깅과 랜덤 포레스트(작성중)](undefined-2/undefined.md)
+  * [Catboost(작성중)](undefined-2/catboost.md)
