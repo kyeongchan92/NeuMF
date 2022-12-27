@@ -13,6 +13,7 @@
   * [NeuMF(Neural Collaborative Filtering)](undefined-1/neumf-neural-collaborative-filtering.md)
   * [NGCF(Neural Graph Collaborative Filtering)](undefined-1/ngcf-neural-graph-collaborative-filtering.md)
   * [NARM(Neural Attentive session-based recommendation)](undefined-1/narm-neural-attentive-session-based-recommendation.md)
+  * [LightGCN](undefined-1/lightgcn.md)
   * [BERT4Rec](undefined-1/bert4rec.md)
   * [SASRec(작성중)](undefined-1/sasrec.md)
 * [통계 기본](undefined-2/README.md)
