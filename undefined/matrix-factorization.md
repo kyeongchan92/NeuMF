@@ -1,6 +1,6 @@
 # Matrix Factorization
 
-## NeuMF의 2.Preliminaries에서 나오는 Matrix Factorization
+## NeuMF > 2.Preliminaries > 2.2 Matrix Factorization
 
 MF는 유저와 아이템을 latent feature의 실수 벡터와 연관짓는다. $$\mathbf{p}_u$$와 $$\mathbf{q}_i$$가 유저 $$u$$와 아이템 $$i$$를 나타낸다고 해보자. MF는 $$\mathbf{p}_u$$와 $$\mathbf{q}_i$$를 내적하여 상호작용 $$y_{ui}$$를 계산한다.
 
