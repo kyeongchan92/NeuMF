@@ -62,3 +62,11 @@ Figure 1에서 보는 것처럼 모델의 인풋을 $$(\mathcal{S}_1^u, \mathcal
 
 
 
+\[1] S. Rendle, C. Freudenthaler, and L. Schmidt-Thieme, “Factorizing personalized markov chains for next-basket recommendation,” in WWW, 2010.
+
+\[19] R. He, W. Kang, and J. McAuley, “Translation-based recommendation,” in RecSys, 2017.
+
+\[21] R. He and J. McAuley, “Fusing similarity models with markov chains for sparse sequential recommendation,” in ICDM, 2016.
+
+
+
