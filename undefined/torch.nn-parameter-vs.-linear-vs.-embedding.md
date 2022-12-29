@@ -40,7 +40,7 @@ plt.xlim(-0.5, 0.5)
 plt.title("histogram of nn.Parameter(torch.Tensor(100, 32))'s weights. (# : 3200)")
 ```
 
-<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 ## nn.Linear <a href="#680c" id="680c"></a>
 
@@ -102,7 +102,7 @@ plt.xlim(-0.5, 0.5)
 plt.title("histogram of nn.Linear(100, 32)'s weight (# : 3200)")
 ```
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 ## nn.Embedding
 
@@ -140,7 +140,7 @@ plt.hist(embedding.weight.detach().numpy().reshape(-1))
 plt.title("histogram of nn.Embedding(100, 32)'s weight (# : 3200)")
 ```
 
-<figure><img src="../.gitbook/assets/image (18).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Conclusion
 
