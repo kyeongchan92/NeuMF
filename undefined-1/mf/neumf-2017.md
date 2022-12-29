@@ -306,7 +306,7 @@ Figure 5는 $$K$$를 1부터 10까지 바꿔가며 측정한 Top-$$K$$ 성능을
 
 #### 4.2.1 Utility of Pre-trainig
 
-<figure><img src="../../.gitbook/assets/image (9) (2).png" alt=""><figcaption><p>Table 2. Performance of NeuMF with and without pre-training</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (9).png" alt=""><figcaption><p>Table 2. Performance of NeuMF with and without pre-training</p></figcaption></figure>
 
 사전학습의 유용성에 대해 설명하기 위하여, NeuMF의 사전학습 버전과 사전학습 안 된 버전 두 개를 비교했다. 사전학습이 없는 NeuMF에서 Adam과 랜덤 초기화를 사용하여 학습시켰다. Table 2에서 볼 수 있는 것처럼, 사전학습된 NeuMF는 거의 모든 경우 더 좋은 성능을 보였고 오직 MovieLens의 잠재요인 8일 때만 살짝 낮았다. 사전학습된 NeuMF는 Movielens와 Pinterest에서 각각 2,2%, 1,1%만큼 상대적인 향상을 보였다.
 

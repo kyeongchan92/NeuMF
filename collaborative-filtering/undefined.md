@@ -25,7 +25,7 @@ description: >-
 
 평점 행렬은 $$R$$이라 표현하고, $$m$$명의 사용자와 $$n$$개의 아이템을 가지고 있는 $$m\times n$$ 행렬이다. 평점 중 일부를 학습데이터로 사용하고, 나머지는 테스트 데이터로 사용한다\[22].
 
-<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## 이웃 기반 방법론의 평점 예측
 
