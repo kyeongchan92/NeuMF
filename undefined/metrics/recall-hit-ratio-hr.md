@@ -18,7 +18,7 @@
 
 <figure><img src="../../.gitbook/assets/image (3) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
-테스트의 시간이 왔다. 테스트 대상이 되는 아이템은 1) interaction이 1인데 테스트셋으로 분류된 아이템과 2) 미사용한 아이템이다.
+테스트의 시간이 왔다. 테스트 대상이 되는 아이템은 **1) interaction이 1인데 테스트셋으로 분류된 아이템과 2) 미사용한 아이템이다.**
 
 k를 3으로 하고 Recall@3을 구해보자. 모델이 사용확률 높은 순서대로 정렬 했을 때 top 3가 K, G, B 라고 해보자. Recall에서는 **순서는 상관없다!** 이들이 선정되었다는 사실까지만 필요하다.
 

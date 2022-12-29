@@ -24,7 +24,7 @@ $$Z_K$$는 제일 좋은 성능일 때를 1로 만들기 위한 normalizer이다
 
 사용한 아이템을 train과 test로 나누게 될 것이다. 그리고 train으로 학습이 진행될 것이다. 이제 테스트 시간이 왔다고 하자.
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (5).png" alt=""><figcaption></figcaption></figure>
 
 ```python
 k = 5
