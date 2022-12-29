@@ -14,7 +14,7 @@ description: >-
 
 
 
-    <figure><img src="../.gitbook/assets/image (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../.gitbook/assets/image (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 
 2.  아이템 기반 협업 필터링
