@@ -10,7 +10,7 @@ $$
 
 $$K$$는 latent space의 차원을 나타낸다. MF는 잠재 공간의 각 차원이 서로 독립적이고 동일한 가중치로 선형 결합한다고 가정하여 유저 및 아이템 잠재 요인(latent factor)의 양방향 상호 작용을 모델링한다. 그렇기 때문에 MF는 잠재 요인의 선형 모델로 여겨진다.
 
-<figure><img src="../.gitbook/assets/image (6).png" alt=""><figcaption><p>Figure 1</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p>Figure 1</p></figcaption></figure>
 
 Figure 1은 내적이 어떻게 MF의 표현력을 제안할 수 있는지를 보여준다. 이 예시를 이해하기 위해 우선적으로 두 가지만 얘기하고 넘어가자. 첫 번째, MF는 유저와 아이템을 같은 잠재 공간(latent space)로 매핑하기 때문에 **두 유저간의 유사도 또한 내적**(같은 방법으로 잠재벡터 사이의 코사인 각도)**으로 계산될 수 있다**. 두 번째로, 일반화 손실 없이, 우리는 MF가 복구해야 하는 두 유저의 실제 유사도로서 자카드 계수를 사용한다.
 
