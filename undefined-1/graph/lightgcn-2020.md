@@ -126,7 +126,15 @@ $$\tilde{\mathbf{A}}=\mathbf{D}^{-\frac{1}{2}} \mathbf{A} \mathbf{D}^{-\frac{1}{
 
 ### 3.2 Model Analysis
 
+LightGCN의 간단한 구조 뒤의 합리성을 증명하기 위해 모델 분석을 수행한다. 춧 번째로 Simplified GCN (SGCN)\[40]과의 연결에 대해 논의할 것인데, 이 모델은 최신의 GCN 모델이며 셀프커넥션을 graph convolution에 통합한 모델이다; 본 분석에서는 레이어를 결합함으로써 LightGCN이 셀프 커넥션의 효과를 가질 수 있다는 것, 그러므로 LightGCN은 인접행렬 속에서 셀프커넥션을 추가할 필요가 없다는 점을 보인다. 그 후 Personalized PageRank\[15]로부터 영감을 받아 oversmoothing을 다룬 최신 GCN 변형인 Approximate Personalized Propagation of Neural Predictions (APPNP)\[24]와의 관련성에 대해 논의한다; 본 분석은 LightGCN과 APPNP 사이의 기본적인 동일성을 보이고, 그러므로 LightGCN이 컨트롤이 가능한 oversmoothing과 함께 긴 범위를 순전파 함의 이점을 똑같이 누린다는 것을 보인다. 마지막으로 두 번째 레이어를 분석하여 LGC가 어떻게 한 유저의 2차원 이웃노드까지 smooth할 수 있는지 보인다.
 
+#### 3.2.1 Relation with SGCN
+
+#### 3.2.2 Relation with APPNP
+
+#### 3.2.3 Second-Order Embeding Smoothness
+
+## 3.3 Model Training
 
 
 
