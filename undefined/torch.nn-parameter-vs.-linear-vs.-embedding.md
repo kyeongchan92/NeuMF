@@ -102,7 +102,7 @@ plt.xlim(-0.5, 0.5)
 plt.title("histogram of nn.Linear(100, 32)'s weight (# : 3200)")
 ```
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
 
 ## nn.Embedding
 

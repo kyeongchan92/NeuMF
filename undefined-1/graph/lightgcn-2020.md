@@ -6,6 +6,8 @@ He, X., Deng, K., Wang, X., Li, Y., Zhang, Y., & Wang, M. (2020, July). Lightgcn
 
 [paperswithcode](https://paperswithcode.com/method/lightgcn)
 
+그림은 직접 그림.
+
 ## 3 METHOD
 
 이전 섹션에서 NGCF가 Collaborative Filtering에 쓰이기엔 무거운 GCN 모델이라는 것을 증명했다. 이에 기반하여, GCN 중 핵심적인 요소만 이용하여 가볍지만 효과적인 모델을 목표로 삼았다. 간단한 모델의 이점은 여러가지가 있다. 좀 더 해석 가능한 점, 학습과 유지보수가 쉽다는 점, 모델의 수행을 분석하기가 쉽다는 점, 더 효율적인 방법으로 고치기 쉬워진다는 점 등이 있다.
@@ -20,7 +22,7 @@ $$
 \mathbf{e}_u^{k+1}=\text{AGG}(\mathbf{e}_u^{(k)}, \left\{\mathbf{e}_i^{k}:i\in\mathcal{N}_u \right\}
 $$
 
-<figure><img src="../../.gitbook/assets/image (3) (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>aggretation function</p></figcaption></figure>
 
 AGG라는 것은 **aggregation 함수**(graph convolution의 핵심임!)라는 것을 의미한다. aggregation 함수는 타겟 노드와 그 타겟노드의 이웃 노드들의 $$k$$번째 레이어의 표현을 인풋으로 받는다. 많은 연구가 AGG를 구체화했는데, GIN\[42]에서는 weighted sum을, GraphSAGE\[14]에서는 LSTM aggregator를, BGNN\[48]에서는 bilinear interaction aggregator를 도입했다. 그러나, 대부분의 연구들은 특징 변형 또는 비선형 활성화를 AGG 함수와 결합하였다. 비록 semantic 인풋 피쳐를 갖는 노드 또는 그래프 분류 태스크에서는 그들의 성능이 좋을지라도, collaborative filtering에 대해서는 무거울 수 있다.
 
@@ -45,7 +47,7 @@ $$
 
 LGC에서 알고 있으면 좋은 점은 바로, 오직 연결된 이웃들만 aggregate하고, 자기 자신은 통합(셀프커넥션)하지 않는다는 것이다. 이 부분은 기존의 대부분의 graph convolution 작업 \[14, 23, 36, 39, 48]이 더 멀리 있는 이웃들을 aggregate하고 셀프커넥션을 특별하게 다루었던 점과 다르다. 다음 서브섹션에서 말할 것이지만, 레이어 결합 과정은 기본적으로 셀프커넥션과 같은 효과를 낸다. 그러므로, LGC에서 셀프커넥션을 포함할 필요는 없다.
 
-#### 3.2.1 Layer Combination and Model Prediction.
+#### 3.1.2 Layer Combination and Model Prediction.
 
 LightGCN에서 학습되는 모델 파라미터들은 오직 0번째 레이어에서 의 임베딩이다. 즉, 유저에 관한 $$\mathbf{e}_u^{(0)}$$, 아이템에 관한 $$\mathbf{e}_i^{(0)}$$이다. 이들이 주어지면, 높은 레이어의 임베딩들은 equation (3)에서 정의된 LGC를 통해 계산된다. K개의 레이어를 통과한 후엔 각 레이어에서 얻어진 임베딩을 결합하여 유저 또는 아이템의 최종 표현을 생성한다.
 
@@ -58,9 +60,83 @@ $$
 \text{equation (4)}
 $$
 
-$$\alpha_K \ge 0$$은 최종 임베딩을 구성하는 $$k$$번째 레이어의 중요도를 의미한다.
+$$\alpha_k \ge 0$$은 최종 임베딩을 구성에 참여하는 $$k$$번째 레이어 임베딩의 중요도를 의미한다. $$\alpha_k$$는 하이퍼파라미터로서 직접 설정할 수도 있고, 모델 파라미터(e.g. 어텐션 네트워크\[3]의 아웃풋)로 설정해서 자동으로 최적화되도록 할 수도 있다. 본 논문의 실험에서는 $$\alpha_k$$를 $$1/(K+1)$$로 uniformly하게 설정하는 것이 일반적으로 좋은 성능을 보였다. 그러므로 우리는 LightGCN이 불필요하게 복잡해지는 것을 피하기 위하여 $$\alpha_k$$를 최적화 하기 위한 특별한 요소를 설계하지 않았다. 최종 임베딩을 만들 때 레이어들을 결합하는 이유는 3가지이다. (1) 레이어 수가 증가할수록 임베딩은 **over-smoothed**된다\[27]. 그러므로 마지막 레이어의 임베딩만 사용하는 것은 문제가 있다. (2) 다른 레이어의 다른 임베딩은 다른 semantic을 갖는다. 예를 들어, 첫 번째 레이어는 상호 작용이 있는 유저와 아이템에 smoothness를 적용하고, 두 번째 레이어는 상호 작용한 아이템(유저)을 공유하는 유저(사용자)를 smooth하며, 높은 레이어는 고차원의 연결을 캐치한다\[39]. 그러므로 이들을 결합한 표현은 더욱 종합적인 이해능력을 갖는다. (3) Weighted sum 방식으로 여러 레이어의 임베딩을 결합하면 GCN에서 중요한, 셀프커넥션을 갖는 graph convolution의 효과를 가질 수 있다(3.2.1에서 증명).
 
-&#x20;
+모델 얘측은 유저 최종 임베딩과 아이템 최종 임베딩의 내적으로 정의된다.
+
+$$
+\hat{y}_{ui}=\mathbf{e}_u^T\mathbf{e}_i
+
+\\
+\;
+\\
+\text{equation (5)}
+$$
+
+추천 목록을 생성할 때 이 숫자가 랭킹 스코어로 사용된다.&#x20;
+
+#### 3.1.3 Matrix Form
+
+계산 과정을 촉진시켜줄 LightGCN의 matrix form에 대해 소개한다. 유저-아이템 상호작용 행렬을 $$\mathbf{R}\in \mathbb{R}^{M \times N}$$이라고 하고 $$M$$과 $$N$$이 각각 유저의 수, 아이템의 수를 나타낸다고 하자. 그리고 각각의 엔트리 $$R_{ui}$$는 $$u$$와 $$i$$간의 상호작용이 있으면 1이고 없으면 0이다. 이에 따라 유저-아이템 그래프의 인접행렬을 다음과 같이 얻는다:
+
+$$
+\mathbf{A}
+=\begin{pmatrix} \mathbf{0}
+ & \mathbf{R}
+ \\ \mathbf{R}^T
+ & \mathbf{0}
+ \end{pmatrix}
+
+\\
+
+\;
+
+\\
+
+\text{equation (6)}
+$$
+
+$$T$$는 임베딩 사이즈라고 할 때, **** 0번째 레이어를 임베딩 행렬 $$\mathbf{E}^{(0)} \in \mathbb{R}^{(M+N)\times T}$$라고 하자. 이에 따라 LGC와 동일한 형태의 행렬을 얻을 수 있다:
+
+$$
+\mathbf{E}^{(k+1)}=(\mathbf{D}^{-\frac{1}{2}}\mathbf{A}\mathbf{D}^{-\frac{1}{2}})\mathbf{E}^{(k)}
+
+\\
+\;
+\\
+\text{equation (7)}
+$$
+
+$$\mathbf{D}$$는 $$(M+N) \times (M+N)$$의 대각행렬이며, 각 엔트리 $$D_{ii}$$는 $$\mathbf{A}$$의 $$i$$번째 row의 0이 아닌 엔트리의 수이다. Degree 행렬이라고도 부른다. 마지막으로, 예측을 위한 최종 임베딩 행렬을 다음과 같이 얻을 수 있다:
+
+$$
+\begin{align*}
+
+\mathbf{E}&=\alpha_0\mathbf{E}^{(0)} +\alpha_1\mathbf{E}^{(1)} + \cdots + \alpha_K\mathbf{E}^{(K)}
+\\
+&=\alpha_0\mathbf{E}^{(0)} + \alpha_1\tilde{\mathbf{A}}\mathbf{E}^{(0)} + \alpha_2\tilde{\mathbf{A}}^2\mathbf{E}^{(0)}
++\cdots+
+\alpha_K\tilde{\mathbf{A}}^K\mathbf{E}^{(0)}
+\end{align*}
+\\ \; \\
+\text{equation (8)}
+$$
+
+$$\tilde{\mathbf{A}}=\mathbf{D}^{-\frac{1}{2}} \mathbf{A} \mathbf{D}^{-\frac{1}{2}}$$는 대칭의 정규화된 행렬이다.
+
+### 3.2 Model Analysis
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
