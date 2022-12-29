@@ -1,6 +1,8 @@
-# NeuMF(Neural Collaborative Filtering)
+# NeuMF(2017)
 
-[He, X., Liao, L., Zhang, H., Nie, L., Hu, X., & Chua, T. S. (2017, April). Neural collaborative filtering. In Proceedings of the 26th international conference on world wide web (pp. 173-182).](https://dl.acm.org/doi/pdf/10.1145/3038912.3052569)
+[paper](https://dl.acm.org/doi/pdf/10.1145/3038912.3052569)
+
+He, X., Liao, L., Zhang, H., Nie, L., Hu, X., & Chua, T. S. (2017, April). Neural collaborative filtering. In _Proceedings of the 26th international conference on world wide web_ (pp. 173-182).
 
 ## 2. PRELIMINARIES <a href="#21-learning-from-implicit-data" id="21-learning-from-implicit-data"></a>
 
@@ -16,7 +18,7 @@ y_{ui}=
 \end{cases}
 $$
 
-<figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
 파라미터 $$\Theta$$를 추정하기 위해서, 기존의 접근법들은 일반적으로 목적함수를 최적화하는 머신러닝 패러다임을 따랐다. 목적함수의 두 가지 유형이 본 논문에서 가장 많이 다뤄질 것이다 - pointwise loss \[14, 19], pairwise loss \[27, 33]. 명시적 피드백에 대한 많은 연구들의 연장선으로써, pointwise learning 방법은 보통 $$\hat{y}_{ui}$$와 타겟 값 $$y_{ui}$$ 사이의 squared loss를 최소화하는 회귀 방식을 따른다. 네거티브 데이터를 안쓰는 대신, 관측되지 않은 모든 엔트리 또는 샘플링된 인스턴스를 네거티브 피드백으로 사용한다 \[14]. pairwise learning \[27, 44]의 아이디어는 관측된 엔트리가 관측되지 않은 것보다 높게 랭크되어야 한다는 것이다. 그러게 하면, $$\hat{y}_{ui}$$와 $$y_{ui}$$ 사이의 손실을 최소화하는 대신, 관측된 엔트리 $$\hat{y}_{ui}$$와 관측되지 않은 엔트리 $$y_{ui}$$사이의 margin, 즉 간격을 최대화한다.
 
@@ -32,7 +34,7 @@ NCF는 $$\hat{y}_{ui}$$를 예측하기 위하여, 신경망을 이용하여 상
 
 ### 3.1 General Framework
 
-<figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption><p>Figure 2</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (10).png" alt=""><figcaption><p>Figure 2</p></figcaption></figure>
 
 유저 $$u$$와 아이템 $$i$$의 상호작용을 $$y_{ui}$$라고 하자. Figure 2에서 가장 아래 쪽에 있는 인풋 레이어는 두 개의 피쳐 벡터들로 구성되어있다. 이를 각각 유저 $$u$$와 아이템 $$i$$를 가리키는 피쳐벡터, $$\mathbf{v}_u^U$$와 $$\mathbf{v}_i^I$$라고 하자. 이 피쳐벡터들은 경우에 따라 커스터마이징이 가능하다. 즉, 유저나 아이템의 side-information이 있으면 이를 피쳐 벡터로 사용하여, 콜드스타트 문제를 완화시킬 수도 있다. 본 논문에서는 순수한 협업필터링 방법에 대하여만 다룬다. 그러므로 이 피쳐벡터들은 원-핫 인코딩이다.
 
@@ -104,7 +106,7 @@ $$
 \hat{y}_{ui}=a_{out}(\mathbf{h}^T(\mathbf{p}_u \odot \mathbf{q}_i))
 $$
 
-<figure><img src="../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
 
 $$a_{out}$$과 $$\mathbf{h}$$는 각각 활성함수와 아웃풋 레이어의 가중치를 나타낸다. 직관적으로, 만약 $$a_{out}$$로 identity function을 사용하고 $$\mathbf{h}$$를 1로 이루어진 uniform 벡터로 강제한다면, 이건 정확히 MF모델이다.
 
@@ -135,7 +137,7 @@ $$
 \end{align*}
 $$
 
-<figure><img src="../.gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
 
 $$W_x$$, $$b_x$$, $$a_x$$는 각각 $$x$$번째 레이어의 퍼셉트론에 대한 가중치 행렬, 편향 벡터, 활성화함수를 나타낸다. MLP 레이어의 활성화 함수는 시그모이드, 하이퍼볼릭 탄젠트, ReLU, 또 다른 것들 중 자유롭게 선택할 수 있다. 각각의 함수에 대해 설명하자면: 1) 시그모이드 함수는 각각의 뉴런을 (0, 1) 안에 위치시켜서 모델의 성능을 제한할 수도 있다; 이는 또한 saturation이라는 단점이 있는데, 즉 아웃풋이 0 또는 1에 가까워지게 되면 뉴런이 학습을 멈춰버린다는 것이다. 2) tanh는 좋은 선택지이고 널리 선택되어 왔지만 \[6, 44], 이는 오직 시그모이드의 단점만을 어느 정도만 완화시킨다. 왜냐하면 이는 시그모이드가 스케일링된 버전이라고 볼 수 있기 때문이다($$\tanh (x/2)=2\sigma - 1$$). 3)그리고 우리는 ReLU를 선택했는데, 이는 생물학적으로 더 그럴듯하고 non-saturated인 것으로 밝혀졌었다\[9]; 게다가, 이는 sparse 활성화를 촉진시켜서 sparse 데이터에 더 잘 맞고 오버피팅될 확률이 적다. 우리의 실험에서는 **ReLU**가 tanh보다 살짝 더 나은 결과를 보여주었고 sigmoid보다는 크게 좋았다.
 
@@ -159,7 +161,7 @@ $$
 )
 $$
 
-<figure><img src="../.gitbook/assets/image (5) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (2).png" alt=""><figcaption></figcaption></figure>
 
 그러나, GMF와 MLP의 임베딩을 공유하는 것은 성능을 제한할 수도 있다. 예를 들어, GMF와 MLP는 같은 임베딩 사이즈를 사용해야만 한다; 최적의 임베딩 사이즈가 매우 다른 데이터라면 이 방법은 최적의 앙상블이라고 할 수 없다.
 
@@ -181,7 +183,7 @@ $$
 \end{align*}
 $$
 
-<figure><img src="../.gitbook/assets/image (2) (3).png" alt=""><figcaption><p>Figure 3. Neural matrix factorization model</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (3).png" alt=""><figcaption><p>Figure 3. Neural matrix factorization model</p></figcaption></figure>
 
 $$\mathbf{p}_u^G$$와 $$\mathbf{p}_u^M$$은 GMF와 MLP의 유저 임베딩을 나타낸다. $$\mathbf{q}_i^G$$와 $$\mathbf{q}_i^M$$는 아이템에 대하여 마찬가지다. 위에서 언급했듯, MLP의 활성함수로 ReLU를 사용했다. 이 모델은 MF의 선형성과 DNN의 비선형성을 결합하여 유저-아이템 latent 구조를 모델링한다. 우리는 이 모델을 "_NeuMF(Neural Matrix Factorization_)"이라고 부른다. 각각의 모델 파라미터들에 관한 미분값은 표준적인 역전파로 계산될 수 있다.
 
@@ -263,7 +265,7 @@ GMF와 MLP의 학습에 관해 말하자면, 최적화 기법으로 Adam(Adaptiv
 
 **Datasets.** 두 가지의 공용 데이터셋 MovieLens와 Pinterest로 실험하였다. 두 데이터셋 요약은 Table 1과 같다.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 1. MovieLens. 이 영화 평점 데이터셋은 collaborative filtering 알고리즘을 계산하기 위하여 널리 이용되어 왔다. 백만 개의 평점이 있는 버전을 사용하였고, 여기서 각 유저는 최소 20개 평가를 하였다. 이건 explicit 피드백 데이터이기 때문에, 우린 의도적으로 explicit 피드백의 implicit signal\[21] 로부터의 학습 성능을 조사하기 위해 이 데이터셋을 선택했다. 결국, implicit data로 바꾸어 평가를 했는지 안했는지에 대해 1과 0으로 나타냈다는 것이다.
 2. Pinterest. 이 implicit 피드백 데이터는 \[8]에 의해 컨텐츠 기반 추천을 위하여 구축되었다. 오리지널 데이터는 매우 크고 매우 sparse하다. 예를 들어, 20% 이상의 유저가 오직 하나의 pin을 갖고 있어서 collaborative filtering 알고리즘을 계산하기 어렵다. 그래서 movielens 데이터와 같은 방식으로 필터링하여 최소 20번의 상호작용(pin)이 있는 유저만을 사용했다. 이렇게 하면 55,187명의 유저와 1,500,809번의 상호작용이 존재한다. 이 데이터에서의 상호작용이란 유저가 자신의 보드에 이미지를 pin 한 것을 의미한다.
@@ -292,37 +294,37 @@ $$
 
 ### 4.2 Performance Comparison (RQ1)
 
-<figure><img src="../.gitbook/assets/image (8) (2).png" alt=""><figcaption><p>Figure 4</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (8) (2).png" alt=""><figcaption><p>Figure 4</p></figcaption></figure>
 
 Figure 4는 predictive factor의 수에 대한 HR@10과 NDCG@10 결과이다. MF방법인 BPR과 eALS의 predictive factor는 잠재 인자의 수와 동일하다. ItemKNN에서 이웃의 수를 다양하게 실험해본 후 최고의 성능 값을 기록하였다. ItemPop은 성능이 너무 낮아 Figure 4에서는 제외되었다.
 
 첫 번째로, NeuMF가 두 데이터셋 모두에서 eALS와 BPR과는 큰 차이로 제일 높은 성능을 달성한 것을 볼 수 있다(차이 각각 4.5%, 4.9%). Pinterest에서는 예측인자가 8로 작음에도 불구하고 eALS와 BPR이 일 때보다 높다. 이는 선형적인 MF와 비선형적인 MLP의 결합으로 인해 NeuMF의 표현력이 높아짐을 의미한다. 두 번째로, 서로 다른 두 NCF인 GMF와 MLPr가 모두 좋은 성능을 보여주었다. MLP가 GMF보다 살짝 높다. MLP는 더 많은 히든레이어를 추가함으로써 더 향상될 수 있으며 여기서는 3개일 때만 보여준다. 작은 예측 요인에 대해서는, GMF가 eALS를 두 데이터셋 모두에서 능가했다; 비록 GMF가 큰 인자에서는 오버피팅이 발생하지만, GMF의 최고 성능은 eALS의 최고성능보다 높다. 마지막으로, GMF와 BPR은 같은 MF를 학습하지만 목적함수는 다르기 때문에, 추천태스크에 대한 분류관점의 효율성은 인정하면서, GMF는 BPR보다는 항상 높다.
 
-<figure><img src="../.gitbook/assets/image (5) (3).png" alt=""><figcaption><p>Figure 5</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (3).png" alt=""><figcaption><p>Figure 5</p></figcaption></figure>
 
 Figure 5는 $$K$$를 1부터 10까지 바꿔가며 측정한 Top-$$K$$ 성능을 보여준다. 그림을 깔끔하게 보기 위하여 다른 NCF 모델은 빼로 NeuMF만 기록하였다. NeuMF는 모든 $$K$$에 대해서 항상 다른 모델보다 높다. 그리고 추가적으로 one-sample paired t-test를 수행하여 향상 정도가 $$p<0.01$$로 통계적으로 유의미한지 확인했다. 베이스라인 방법에 대하여, Movielens의 NDCG에서, eALS는 BPR을 5.1% 능가했고 Pinterest에서는 더 낮았다. Pairwise ranking-aware 학습자 때문에 BPR이 랭킹 성능에서는 더 강력하다는 \[14]의 발견과 동일한 결과이다. ItemKNN은 모델 기반 방법론보다는 낮았다. 그리고 ItemPop의 결과는 매우 안좋아서 단순 인기상품보다는 개인화가 요구된다는 것을 보여준다.
 
 #### 4.2.1 Utility of Pre-trainig
 
-<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Table 2. Performance of NeuMF with and without pre-training</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (9).png" alt=""><figcaption><p>Table 2. Performance of NeuMF with and without pre-training</p></figcaption></figure>
 
 사전학습의 유용성에 대해 설명하기 위하여, NeuMF의 사전학습 버전과 사전학습 안 된 버전 두 개를 비교했다. 사전학습이 없는 NeuMF에서 Adam과 랜덤 초기화를 사용하여 학습시켰다. Table 2에서 볼 수 있는 것처럼, 사전학습된 NeuMF는 거의 모든 경우 더 좋은 성능을 보였고 오직 MovieLens의 잠재요인 8일 때만 살짝 낮았다. 사전학습된 NeuMF는 Movielens와 Pinterest에서 각각 2,2%, 1,1%만큼 상대적인 향상을 보였다.
 
 ### 4.3 Log Loss with Negative Sampling (RQ2)
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>Figure 6. Training loss and recommendation performance of NCF methods w.r.t the number of iterations on MovieLens (factors=8)</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>Figure 6. Training loss and recommendation performance of NCF methods w.r.t the number of iterations on MovieLens (factors=8)</p></figcaption></figure>
 
 Implicit 피드백이 한 가지 클래스만 존재한다는 속성을 다루기 위해서, 우리는 추천 문제를 이진 분류 문제로 변환했다. NCF를 확률적 모델로 바라봄으로써, 이를 log loss로 최적화하였다. Figure 6은 MovieLens에 대해 각각의 iteration에서 NCF의 학습 loss와 추천 성능을 보여준다. Pinterest에 대한 결과에서는 동일한 추세를 보여 생략했다. 첫 번째로, iteration이 높아질수록 NCF의 학습 손실은 점점 감소하고 추천 성능은 향상하는 것을 볼 수 있다. iteration 10 이하에서 가장 효율적인 성능 향상이 일어나며, 더 높은 곳에서는 오버피팅이 발생한다(예를 들어, 10 이상에서는 비록 NeuMF의 학습 손실은 감소하지만 추천 성능은 하락한다). 두 번째로, 세 NCF 모델 중 NeuMF가 가장 낮은 학습 손실을 보였고 그 다음 MLP, GMF 순서이다. 추천 성능 또한 NeuMF > MLP > GMF 순서이다. 위 결과는 implicit 피드백을 학습할 때 log loss를 최적화하는 것에 대한 합리성과 효과성을 제공하는 경험적 증거가 된다.
 
 Pointwise 목적 함수\[27 33]에 대한 pointwise log loss의 장점은 네거티브 샘플링 시의 샘플링 비율의 유연성이다. pairwise objective 함수는 오직 하나의 네거티브 샘플이 positive 샘플과 페어링 되는 반면, pointwise loss의 샘플링 비율은 유연하게 조절될 수 있다.
 
-<figure><img src="../.gitbook/assets/image (3) (2).png" alt=""><figcaption><p>Figure 7. positive 샘플당 네거티브 샘플의 수에 따를 성능(factor=16). BPR는 오직 하나의 네거티브 샘플을 사용한다.</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (2) (2).png" alt=""><figcaption><p>Figure 7. positive 샘플당 네거티브 샘플의 수에 따를 성능(factor=16). BPR는 오직 하나의 네거티브 샘플을 사용한다.</p></figcaption></figure>
 
 NCF의 네거티브 샘플링의 효과를 설명하기 위하여, Figure 7에 네거티브 샘플링 비율을 다르게 하여 성능을 비교하였다. positive 샘플 하나 당 하나의 네거티브 샘플링은 최적의 성능을 위해선 충분하지 못하고 더 많은 네거티브 샘플이 좋음이 명백히 보인다. GMF와 BPR을 비교했을 때, GMF의 성능은 네거티브 샘플링 비율이 1일 때는 BPR의 성능과 동일하지만, GMF의 성능은 샘플링 비율이 높아짐에 따라 점점 높아지는 것을 볼 수 있다. 이를 통해 pairwise BPR loss에 대한 log loss의 장점을 확인할 수 있다. 두 모든 데이터셋에 대하여, 최적의 샘플링 비율은 3에서 6 근방이다. Pinterest에서는, 샘플링 비율이 7보다 커지면 성능이 떨어지기 시작했다. 이는 샘플링 비율을 공격적으로 설정하는 것이 성능에 큰 타격이 됨을 보여준다.
 
 ### 4.4 Is Deep Learning Helpful? (RQ3)
 
-<figure><img src="../.gitbook/assets/image (5) (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (4).png" alt=""><figcaption></figcaption></figure>
 
 유저-아이템 상호작용 함수를 신경망으로 학습시키는 연구가 소수 존재함에 따라, 추천 태스크에 딥 네트워크 구조를 사용할지 말지가 궁금해진다. 그러기 위하여, MLP의 히든 레이어의 숫자를 바꿔가며 실험해보았다. 결과는 Table 3과 4에 요약되어있다. MLP-3은 (임베딩 레이어 옆)세 개의 히든 레이어를 가진 MLP를 의미한다. 표에서 볼 수 있는 것처럼, 같은 capability를 가진 모델이라고 해도 더 많은 레이어를 쌓는 것이 더 좋은 성능을 보인다. 이 결과는 collaborative 추천에 대해 딥 모델을 사용하는 것의 효과성을 보여준다. 우리는 이 향상이 더 많은 비선형 레이어를 쌓았기 때문이라고 생각한다. 이를 확인하기 위해서, 활성함수를 idendity 함수로 하여 선형 레이어를 더 쌓아보았다. 그 결과는 ReLU를 사용했을때보다 훨씬 낮았다.
 

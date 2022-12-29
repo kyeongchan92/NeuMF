@@ -1,6 +1,8 @@
-# LightGCN
+# LightGCN(2020)(작성중)
 
 [paper](https://dl.acm.org/doi/pdf/10.1145/3397271.3401063)
+
+He, X., Deng, K., Wang, X., Li, Y., Zhang, Y., & Wang, M. (2020, July). Lightgcn: Simplifying and powering graph convolution network for recommendation. In _Proceedings of the 43rd International ACM SIGIR conference on research and development in Information Retrieval_ (pp. 639-648).
 
 [paperswithcode](https://paperswithcode.com/method/lightgcn)
 
@@ -18,9 +20,9 @@ $$
 \mathbf{e}_u^{k+1}=\text{AGG}(\mathbf{e}_u^{(k)}, \left\{\mathbf{e}_i^{k}:i\in\mathcal{N}_u \right\}
 $$
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
-AGG라는 것은 **aggregation 함수**(graph convolution의 핵심임!)라는 것을 의미한다. aggregation 함수는 타겟 노드와 그 이웃 노드들의 $$k$$번째 레이어의 표현을 받는다. 많은 연구가 AGG를 구체화했는데, GIN\[42]에서는 weighted sum을, GraphSAGE\[14]에서는 LSTM aggregator를, BGNN\[48]에서는 bilinear interaction aggregator를 도입했다. 그러나, 대부분의 연구들은 특징 변형 또는 비선형 활성화를 AGG 함수와 결합하였다. 비록 semantic 인풋 피쳐를 갖는 노드 또는 그래프 분류 태스크에서는 그들의 성능이 좋을지라도, collaborative filtering에 대해서는 무거울 수 있다.
+AGG라는 것은 **aggregation 함수**(graph convolution의 핵심임!)라는 것을 의미한다. aggregation 함수는 타겟 노드와 그 타겟노드의 이웃 노드들의 $$k$$번째 레이어의 표현을 인풋으로 받는다. 많은 연구가 AGG를 구체화했는데, GIN\[42]에서는 weighted sum을, GraphSAGE\[14]에서는 LSTM aggregator를, BGNN\[48]에서는 bilinear interaction aggregator를 도입했다. 그러나, 대부분의 연구들은 특징 변형 또는 비선형 활성화를 AGG 함수와 결합하였다. 비록 semantic 인풋 피쳐를 갖는 노드 또는 그래프 분류 태스크에서는 그들의 성능이 좋을지라도, collaborative filtering에 대해서는 무거울 수 있다.
 
 #### 3.1.1 Light Graph Convolution (LGC).
 
