@@ -140,7 +140,7 @@ plt.hist(embedding.weight.detach().numpy().reshape(-1))
 plt.title("histogram of nn.Embedding(100, 32)'s weight (# : 3200)")
 ```
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (2).png" alt=""><figcaption></figcaption></figure>
 
 ## Conclusion
 
