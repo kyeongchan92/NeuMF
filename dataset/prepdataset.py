@@ -3,8 +3,9 @@ import pickle
 
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
 
-from arguments import update_dataset_args
+
 class ML1mDataset:
     def __init__(self, args):
         self.args = args
@@ -18,14 +19,13 @@ class ML1mDataset:
             print(f"Preprocess".ljust(60, '='))
             ratings = self.load_ratings_path()
 
-            print(f"New indexing".ljust(60, '-'))
+            print(f"Densify".ljust(60, '-'))
             uidx_map = {user:i for i, user in enumerate(set(ratings['user']))}
             iidx_map = {item:i for i, item in enumerate(set(ratings['item']))}
-            print(f"".ljust(60, '-'))
 
-            print(f"New mapping".ljust(60, '-'))
             ratings['uidx'] = ratings['user'].map(uidx_map)
             ratings['iidx'] = ratings['item'].map(iidx_map)
+            print(f"".ljust(60, '-'))
 
             n_user = ratings['uidx'].nunique()
             n_item = ratings['iidx'].nunique()
@@ -34,27 +34,32 @@ class ML1mDataset:
             print(f"".ljust(60, '-'))
 
             print(f"train test split".ljust(60, '-'))
-
+            train_df, test_df = train_test_split(ratings, test_size=self.args.test_ratio, random_state=self.args.train_test_split_rs)
+            print(f"train size : {len(train_df):,}, test_size : {len(test_df):,}")
             print(f"".ljust(60, '-'))
 
-            print(f"Negative sampling for training".ljust(60, '-'))
-            pos_items = ratings.groupby('uidx')['iidx'].agg(lambda x: set(x)).to_dict()
-            neg_user, neg_item = [], []
-            for u in range(self.args.n_user):
-                u_pos_items = pos_items[u]
+            print(f"Negative sampling for train data".ljust(60, '-'))
+            pos_items = train_df.groupby('uidx')['iidx'].agg(lambda x: set(x)).to_dict()
+            neg_samples_user, neg_samples_item = [], []
+            for u in train_df['uidx'].unique():
+                u_pos_items = pos_items[u]  # u_pos_items : set
                 neg_items = list(set(range(self.args.n_item)) - u_pos_items)
                 neg_samples = np.random.choice(neg_items, min(len(u_pos_items) * self.args.neg_ratio, len(neg_items)), replace=False)
-                neg_user.extend([u] * len(neg_samples))
-                neg_item.extend(neg_samples)
+                neg_samples_user.extend([u] * len(neg_samples))
+                neg_samples_item.extend(neg_samples)
+            print(f"train size after negative sampling: {len(train_df):,} --> {len(train_df)+len(neg_samples_user):,}")
             print(f"".ljust(60, '-'))
 
-            train={'user':, 'item':, 'label':}
-            test={'user':, 'item':, 'label':}
-            prep_data = dict(user=ratings['uidx'].tolist() + neg_user,
-            item=ratings['iidx'].tolist() + neg_item,
-            label=[1] * len(ratings) + [0] * len(neg_user),
-            update_args=dict(n_user=n_user, n_item=n_item)
-            )
+            train = {
+                'user' : train_df['uidx'].tolist() + neg_samples_user,
+                'item': train_df['iidx'].tolist() + neg_samples_item,
+                'label' : [1] * len(train_df) + [0] * len(neg_samples_user)
+                }
+            prep_data = dict(
+                train=train,
+                test=test_df.groupby('uidx')['iidx'].unique().to_dict(),
+                update_args=dict(n_user=n_user, n_item=n_item)
+                )
             prep_path = self.get_prep_data_path()
             with open(prep_path, 'wb') as q:
                 pickle.dump(prep_data, q)
