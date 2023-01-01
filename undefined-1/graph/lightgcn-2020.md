@@ -10,21 +10,25 @@ He, X., Deng, K., Wang, X., Li, Y., Zhang, Y., & Wang, M. (2020, July). Lightgcn
 
 ## 3 METHOD
 
-이전 섹션에서 NGCF가 Collaborative Filtering에 쓰이기엔 무거운 GCN 모델이라는 것을 증명했다. 이에 기반하여, GCN 중 핵심적인 요소만 이용하여 가볍지만 효과적인 모델을 목표로 삼았다. 간단한 모델의 이점은 여러가지가 있다. 좀 더 해석 가능한 점, 학습과 유지보수가 쉽다는 점, 모델의 수행을 분석하기가 쉽다는 점, 더 효율적인 방법으로 고치기 쉬워진다는 점 등이 있다.
+이전 섹션에서 NGCF가 Collaborative Filtering에 쓰이기엔 무거운 GCN 모델이라는 것을 증명했다. 이에 기반하여, GCN 중 핵심적인 요소만 이용하여 가볍지만 효과적인 모델을 목표로 삼았다. 모델이 간단해짐으로써 얻는 이점은 여러가지가 있다. 좀 더 해석 가능한 점, 학습과 유지보수가 쉽다는 점, 모델의 수행을 분석하기가 쉽다는 점, 더 효율적인 방법으로 고치기 쉬워진다는 점 등이 있다.
 
 본 섹션에서는 Figure 2에 그려진 것과 같이 Light Convolution Network (LightGCN) 모델 설계를 설명한다.&#x20;
 
 ### 3.1 LightGCN
 
-GCN의 기본 아이디어는 그래프에서의 특징을 smoothing함으로써 노드의 표현을 학습하는 것이다 \[23, 40]. 이를 위해서, GCN은 반복적으로 graph convolution을 수행한다. 즉, 타겟 노드의 새로운 표현으로서 이웃의 피쳐를 aggregating한다. 이러한 이웃 aggregation은 다음과 같이 요약될 수 있다:
+{% hint style="info" %}
+용어 정리
+
+<mark style="background-color:red;">**smoothing**</mark> : GCN에서 노드는 이웃 노드를 aggregation하여 업데이트 되는데, 레이어가 깊어질수록 그 범위가 커져서 노드들간의 차이가 점점 사라진다. over-smoothing이란, 레이어가 많아질수록 다수의 노드가 유사해지는 현상을 말한다.
+{% endhint %}
+
+GCN의 기본 아이디어는 그래프에서의 특징을 <mark style="background-color:red;">**smoothing**</mark>함으로써 노드의 표현을 학습하는 것이다 \[23, 40]. 이를 위해서, GCN은 반복적으로 graph convolution을 수행한다. 즉, 타겟 노드의 새로운 표현으로서 이웃의 피쳐를 aggregating한다. 이러한 이웃 aggregation은 다음과 같이 요약될 수 있다:
 
 $$
 \mathbf{e}_u^{k+1}=\text{AGG}(\mathbf{e}_u^{(k)}, \left\{\mathbf{e}_i^{k}:i\in\mathcal{N}_u \right\}
 $$
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p>ㅁㅎㄱgaggretation function</p></figcaption></figure>
-
-<figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption><p>aggretation function</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>aggregation function</p></figcaption></figure>
 
 AGG라는 것은 **aggregation 함수**(graph convolution의 핵심임!)라는 것을 의미한다. aggregation 함수는 타겟 노드와 그 타겟노드의 이웃 노드들의 $$k$$번째 레이어의 표현을 인풋으로 받는다. 많은 연구가 AGG를 구체화했는데, GIN\[42]에서는 weighted sum을, GraphSAGE\[14]에서는 LSTM aggregator를, BGNN\[48]에서는 bilinear interaction aggregator를 도입했다. 그러나, 대부분의 연구들은 특징 변형 또는 비선형 활성화를 AGG 함수와 결합하였다. 비록 semantic 인풋 피쳐를 갖는 노드 또는 그래프 분류 태스크에서는 그들의 성능이 좋을지라도, collaborative filtering에 대해서는 무거울 수 있다.
 
@@ -132,17 +136,43 @@ LightGCN의 간단한 구조 뒤의 합리성을 증명하기 위해 모델 분�
 
 #### 3.2.1 Relation with SGCN
 
+생략
+
 #### 3.2.2 Relation with APPNP
+
+생략
 
 #### 3.2.3 Second-Order Embeding Smoothness
 
+생략
+
 ## 3.3 Model Training
 
+LightGCN의 학습가능한 파라미터는 오직 0번째 레이어의 임베딩, 즉 $$\Theta=\left\{ \mathbf{E}^{(0)} \right\}$$뿐이다. 즉, 모델의 복잡도는 표준 matrix factorization(MF)할 때와 똑같다. 우리는 미관측된 엔트리보다 관측된 엔트리의 예측값을 더욱 권장하는 pairwise loss인 BPR(Bayesian Personalized Ranking) loss\[32]를 사용했다.
+
+$$
+L_{BPR}=-\sum_{u=1}^M \sum_{i \in \mathcal{N}_u} \sum_{j \notin \mathcal{N}_u} \ln \sigma(\hat{y}_{ui}-\hat{y}_{uj}) + \lambda ||\mathbf{E}^{(0)}||^2
+$$
+
+$$\lambda$$는 $$L_2$$ 정규화 텀의 강도 조절 요인이다. 미니배치 형식으로 Adam\[22] 옵티마이저를 사용했다. Hard negative sampling\[31]이나 adversarial sampling\[9]같은, LightGCN의 학습을 향상시킬 수 있는 진보된 네거티브 샘플링을 알고 있지만, 이는 본 연구의 초점이 아니므로 추후 연구로 남겨놓겠다.
+
+GCN과 NGCF에서 사용되는 드랍아웃은 사용하지 않았다. 그 이유는 LightGCN은 피쳐를 transformation하는 가중치 행렬이 없어서 임베딩 레이어에 $$L_2$$ 정규화로 강제하는 것으로도 오버피팅을 충분히 막을 수 있기 때문이다. 이는 LightGCN의 간단함으로부터 나온 것이다 - 두 개의 드랍아웃 ratio(노드 드랍아웃, 메시지 드랍아웃)을 조절해야하고 각 레이어의 임베딩을 정규화(normalize)까지 추가적으로 해야하는 NGCF보다 학습시키기 쉽다.
+
+게다가,&#x20;
 
 
 
 
 
+
+
+
+
+\[9] Jingtao Ding, Yuhan Quan, Xiangnan He, Yong Li, and Depeng Jin. 2019. Reinforced Negative Sampling for Recommendation with Exposure Data. In IJCAI. 2230–2236
+
+\[31] Steffen Rendle and Christoph Freudenthaler. 2014. Improving pairwise learning for item recommendation from implicit feedback. In WSDM. 273–282.
+
+\[32] Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. 2009. BPR: Bayesian Personalized Ranking from Implicit Feedback. In UAI. 452– 461.
 
 
 
