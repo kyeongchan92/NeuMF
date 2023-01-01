@@ -1,5 +1,7 @@
 # NeuMF(2017)
 
+## Paper
+
 [paper](https://dl.acm.org/doi/pdf/10.1145/3038912.3052569)
 
 He, X., Liao, L., Zhang, H., Nie, L., Hu, X., & Chua, T. S. (2017, April). Neural collaborative filtering. In _Proceedings of the 26th international conference on world wide web_ (pp. 173-182).
