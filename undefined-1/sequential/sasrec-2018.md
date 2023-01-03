@@ -24,7 +24,7 @@ Kang, W. C., & McAuley, J. (2018, November). Self-attentive sequential recommend
 
 순차적 추천에서는 유저의 액션 시퀀스 $$\mathcal{S}^u=(\mathcal{S}_1^u, \mathcal{S}_2^u, \cdots,\mathcal{S}_{|\mathcal{S}^u|}^u)$$가 주어지며 다음 아이템을 예측해야한다. 학습 시, 시간 $$t$$에서 모델은 이전의 $$t$$개의 아이템에 기반하여 다음 아이템을 예측한다.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (15).png" alt=""><figcaption><p>Figure 1: SASRec의 학습 과정 다이어그램. 각 time 스텝에서 모델은 모든 이전의 아이템을 고려하여 다음 액션과 관련된 아이템에 '주목'하기 위해 어텐션을 이용한다.</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (15).png" alt=""><figcaption><p>Figure 1: SASRec의 학습 과정 다이어그램. 각 time 스텝에서 모델은 모든 이전의 아이템을 고려하여 다음 액션과 관련된 아이템에 '주목'하기 위해 어텐션을 이용한다.</p></figcaption></figure>
 
 Figure 1에서 보는 것처럼 모델의 인풋을 $$(\mathcal{S}_1^u, \mathcal{S}_2^u, \cdots,\mathcal{S}_{|\mathcal{S}^u|-1}^u)$$로, 아웃풋은 $$(\mathcal{S}_2^u, \mathcal{S}_2^u, \cdots,\mathcal{S}_{|\mathcal{S}^u|}^u)$$로 생각하면 편하다. 이번 섹션에서는 임베딩 레이어, 셀프어텐션 블록, 예측 레이어를 통해 순차적 추천시스템 모델을 어떻게 구축할 수 있는지 설명한다.
 
