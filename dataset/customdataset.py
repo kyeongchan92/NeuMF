@@ -11,8 +11,8 @@ class CustomTrainDataset(Dataset):
         self.label = prep_data['train']['label']
 
         update_args = prep_data['update_args']
-        self.args.n_user = update_args['n_user']
-        self.args.n_item = update_args['n_item']
+        self.args.n_users = update_args['n_users']
+        self.args.n_items = update_args['n_items']
         print(f"".ljust(60, '='))
 
     def __getitem__(self, i):

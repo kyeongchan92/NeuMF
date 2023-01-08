@@ -8,8 +8,11 @@ from trainer import Trainer
 
 
 if __name__ == '__main__':
+    # preprocess
     ml1m_dataset = ML1mDataset(args)
     ml1m_dataset.preprocess()
+
+    # dataset
     train_dataset = CustomTrainDataset(args, ml1m_dataset)
     test_data = ml1m_dataset.load_prep_data()['test']
 

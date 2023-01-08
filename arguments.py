@@ -4,7 +4,7 @@ import argparse
 parser = argparse.ArgumentParser(description='NeuMF')
 
 parser.add_argument('--ratings_path', required=False, default='data/ml-1m/ratings.dat')
-parser.add_argument('--emb_dim', required=False, default=32)
+parser.add_argument('--emb_dim', required=False, default=256)
 parser.add_argument('--neg_ratio', required=False, default=3)
 parser.add_argument('--prep_data_dir', required=False, default='prep_data')
 parser.add_argument('--prep_data_name', required=False, default='prep_data.pkl')

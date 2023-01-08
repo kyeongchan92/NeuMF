@@ -27,12 +27,13 @@ class ML1mDataset:
             ratings['iidx'] = ratings['item'].map(iidx_map)
             print(f"".ljust(60, '-'))
 
-            n_user = ratings['uidx'].nunique()
-            n_item = ratings['iidx'].nunique()
-            self.args.n_user = n_user
-            self.args.n_item = n_item
+            n_users = ratings['uidx'].nunique()
+            n_items = ratings['iidx'].nunique()
+            self.args.n_users = n_users
+            self.args.n_items = n_items
             print(f"".ljust(60, '-'))
 
+            # train test split
             print(f"train test split".ljust(60, '-'))
             train_df, test_df = train_test_split(ratings, test_size=self.args.test_ratio, random_state=self.args.train_test_split_rs)
             print(f"train size : {len(train_df):,}, test_size : {len(test_df):,}")
@@ -43,7 +44,7 @@ class ML1mDataset:
             neg_samples_user, neg_samples_item = [], []
             for u in train_df['uidx'].unique():
                 u_pos_items = pos_items[u]  # u_pos_items : set
-                neg_items = list(set(range(self.args.n_item)) - u_pos_items)
+                neg_items = list(set(range(self.args.n_items)) - u_pos_items)
                 neg_samples = np.random.choice(neg_items, min(len(u_pos_items) * self.args.neg_ratio, len(neg_items)), replace=False)
                 neg_samples_user.extend([u] * len(neg_samples))
                 neg_samples_item.extend(neg_samples)
@@ -58,7 +59,7 @@ class ML1mDataset:
             prep_data = dict(
                 train=train,
                 test=test_df.groupby('uidx')['iidx'].unique().to_dict(),
-                update_args=dict(n_user=n_user, n_item=n_item)
+                update_args=dict(n_users=n_users, n_items=n_items)
                 )
             prep_path = self.get_prep_data_path()
             with open(prep_path, 'wb') as q:
