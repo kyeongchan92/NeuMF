@@ -6,6 +6,7 @@
     * [Implicit data에서의 nDCG](undefined/metrics/implicit-data-ndcg.md)
   * [BCELoss](undefined/bceloss.md)
   * [Matrix Factorization](undefined/matrix-factorization.md)
+  * [데이터 과학을 위한 통계 목차 정리](undefined/undefined.md)
 * [메모리 기반 추천시스템](undefined-1/README.md)
   * [Collaborative Filtering](collaborative-filtering/README.md)
     * [이웃 기반 협업 필터링](collaborative-filtering/undefined.md)

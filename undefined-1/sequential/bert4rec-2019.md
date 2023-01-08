@@ -6,24 +6,6 @@ Sun, F., Liu, J., Wu, J., Pei, C., Lin, X., Ou, W., & Jiang, P. (2019, November)
 
 pytorch code : [https://github.com/jaywonchung/BERT4Rec-VAE-Pytorch](https://github.com/jaywonchung/BERT4Rec-VAE-Pytorch)
 
-\---
-
-***
-
-1.  BERT4Rec
-
-    3.1 Problem Statement
-
-    3.2 Model Architecture
-
-    3.3 Transformer Layer
-
-    3.4 Embedding Layer
-
-    3.5 Output Layer
-
-    ### 3.6 Model Learning <a href="#36-model-learning" id="36-model-learning"></a>
-
 ## ABSTRACT <a href="#abstract" id="abstract"></a>
 
 과거 모델들은 순차적 신경망을 사용하여 왼쪽에서 오른쪽으로 인코딩했지만, 그런 모델들은 최적화됐다고 할 수 없다. 이유1) 단방향 구조는 hidden representation의 가능성을 제한한다. 이유2) 추천에 있어서 순차적 정보를 엄격하게 지키는 것은 실제로는 맞지 않다.
